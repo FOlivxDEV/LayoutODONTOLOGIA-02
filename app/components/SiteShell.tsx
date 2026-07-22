@@ -100,6 +100,10 @@ export function SiteShell({ content }: { content: RemoteSiteContent | null }) {
           <img src="/hero-smile.webp" width="1024" height="1536" alt="Sorriso natural iluminado sobre fundo preto" fetchPriority="high" />
           <div className="glass-note"><span className="pulse" aria-hidden="true"></span><div><strong>Seu sorriso, sua história</strong><small>Cuidado próximo em todas as fases</small></div></div>
         </div>
+        <div className="hero-insurance" id="convenios" data-reveal aria-label="Convênios odontológicos atendidos">
+          <p>Convênios atendidos</p>
+          <div className="hero-insurance-viewport"><div className="hero-insurance-track">{[0, 1].map((loop) => <div className="hero-insurance-set" key={loop} aria-hidden={loop === 1}>{config.insurances.map((name) => <span key={`${loop}-${name}`}>{name}</span>)}</div>)}</div></div>
+        </div>
       </section>
 
       <section className="section clinic-story" id="equipe" aria-labelledby="clinica-story-title">
@@ -126,8 +130,6 @@ export function SiteShell({ content }: { content: RemoteSiteContent | null }) {
         </div>
         <p className="results-note">O carrossel pausa ao receber foco ou ao passar o mouse.</p>
       </section>
-
-      <section className="section insurance" id="convenios" data-reveal><div><p className="eyebrow"><span></span> Convênios odontológicos</p><h2>Consulte a cobertura do seu plano.</h2><p>Atendemos os convênios listados ao lado. A cobertura varia conforme o plano e o procedimento; confirme a elegibilidade com a equipe antes do atendimento.</p><WhatsAppLink label="Pedir orçamento pelo WhatsApp" /></div><div className="insurance-logos">{config.insurances.map(name => <span key={name}>{name}<small>convênio atendido</small></span>)}</div></section>
 
       <section className="section faq" id="duvidas" data-reveal>
         <div className="section-heading"><p className="eyebrow dark"><span></span> Dúvidas frequentes</p><h2>Informação clara antes do primeiro contato.</h2></div>

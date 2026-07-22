@@ -258,3 +258,63 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
 .faq details,.faq details.is-visible { opacity:1!important; transform:none!important; color:#eefcff; background:var(--glass-fill)!important; }
 .faq summary { color:#eefcff; }
 .faq details p { color:#b7d1d6; }
+
+/* Editorial layout: full-width navigation, restrained glass and squarer cards */
+.site-header { top:0; width:100%; min-height:76px; padding:10px max(30px,calc((100vw - 1480px)/2)); border:0; border-bottom:1px solid rgba(9,48,55,.12); border-radius:0; background:rgba(255,255,255,.96); box-shadow:0 8px 28px rgba(4,34,42,.08); backdrop-filter:blur(14px); }
+.brand img { filter:invert(1); }
+.nav { color:#102f35; gap:16px; font-size:.86rem; }
+.nav>a:not(.button) { padding:10px 6px; border-radius:0; }
+.nav>a:not(.button):hover { color:#087d7a; background:transparent; }
+.site-header .nav-cta { color:#fff; border-color:#083e48; border-radius:5px; background:#073c46; box-shadow:none; }
+.site-header .nav-cta:hover { color:#fff; background:#0b5861; border-color:#0b5861; box-shadow:none; }
+.site-header .menu-button { border:0; background:transparent; box-shadow:none; backdrop-filter:none; }
+.site-header .menu-button span { background:#10343b; }
+.hero { min-height:820px; padding:126px max(30px,calc((100vw - 1480px)/2)) 0; grid-template-columns:minmax(420px,.88fr) minmax(520px,1.12fr); grid-template-rows:1fr auto; column-gap:84px; row-gap:46px; align-items:center; }
+.hero-content { max-width:620px; }
+.hero h1 { max-width:590px; font-size:clamp(2.8rem,3.75vw,4.25rem); line-height:1.03; margin-bottom:22px; }
+.hero-copy { max-width:600px; font-size:.98rem; line-height:1.68; }
+.hero-actions { margin-top:28px; }
+.hero-visual { min-height:500px; }
+.hero-visual>img { height:500px; border-radius:10px; }
+.glass-note { left:-32px; bottom:28px; border-radius:8px; }
+.hero-insurance { grid-column:1/-1; position:relative; z-index:2; width:100vw; margin-left:calc(50% - 50vw); padding:20px 0 24px; border-top:1px solid rgba(255,255,255,.14); background:rgba(12,104,100,.28); overflow:hidden; }
+.hero-insurance>p { margin:0 0 13px; text-align:center; color:#bce7df; font-size:.63rem; font-weight:800; letter-spacing:.18em; text-transform:uppercase; }
+.hero-insurance-viewport { overflow:hidden; }
+.hero-insurance-track { width:max-content; display:flex; animation:insurance-scroll 28s linear infinite; will-change:transform; }
+.hero-insurance-set { display:flex; align-items:center; }
+.hero-insurance-set span { min-width:210px; padding:5px 28px; text-align:center; color:#f1fbf8; font-size:.92rem; font-weight:750; letter-spacing:.02em; opacity:.88; }
+.hero-insurance:hover .hero-insurance-track,.hero-insurance:focus-within .hero-insurance-track { animation-play-state:paused; }
+@keyframes insurance-scroll { to { transform:translateX(-50%); } }
+
+.feature-card,.team-carousel,.place-grid>div,.map-preview,.treatment-row,.treatment-category,.treatments-cta,.result-card,.faq details,.contact-card,.testimonial-empty,.legal-page section,.clinic-photo-stack { border-radius:8px!important; }
+.team-slide .portrait-photo img,.clinic-photo-stack img { border-radius:6px; }
+.results { padding-top:92px; }
+.results-heading { max-width:1480px; }
+.results-heading h2 { max-width:680px; font-size:clamp(2.45rem,3.9vw,4.2rem); }
+.result-card { width:min(400px,72vw); border-radius:6px!important; }
+.result-image { height:310px; }
+
+@media (max-width:980px) {
+  .site-header { padding-inline:18px; }
+  .hero { grid-template-columns:1fr; grid-template-rows:auto auto auto; padding:116px 28px 0; gap:36px; }
+  .hero-content { max-width:760px; }
+  .hero-visual { min-height:430px; }.hero-visual>img { height:430px; }
+  .hero-insurance { grid-column:1; }
+}
+@media (max-width:620px) {
+  .site-header { width:100%; min-height:78px; padding:8px 14px; border-radius:0; }
+  .nav.open { top:78px; width:100%; right:0; border-radius:0; color:#102f35; background:rgba(255,255,255,.98); }
+  .nav.open>a:not(.button) { color:#102f35; }
+  .hero { padding:110px 18px 0; gap:30px; }
+  .hero h1 { font-size:clamp(2.55rem,12vw,3.5rem); }
+  .hero-copy { font-size:.92rem; line-height:1.65; }
+  .hero-visual { min-height:320px; }.hero-visual>img { height:320px; border-radius:7px; }
+  .glass-note { left:10px; bottom:12px; border-radius:6px; }
+  .hero-insurance { padding:16px 0 19px; }
+  .hero-insurance-set span { min-width:150px; padding-inline:18px; font-size:.8rem; }
+  .result-card { width:82vw; }.result-image { height:270px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero-insurance-track { width:auto; max-width:100%; overflow-x:auto; animation:none; }
+  .hero-insurance-set:nth-child(2) { display:none; }
+}
