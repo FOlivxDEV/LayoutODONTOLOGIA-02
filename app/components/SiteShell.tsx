@@ -72,7 +72,7 @@ export function SiteShell() {
           <p className="eyebrow"><span></span> JR Odontologia</p>
           <h1>Seu sorriso merece <em>cuidado por inteiro.</em></h1>
           <p className="hero-copy">Clínica odontológica em Cubatão, SP, que reúne profissionais reconhecidos na Baixada Santista. Oferecemos cuidado completo, da prevenção e manutenção aos tratamentos estéticos, sempre com avaliação responsável e atendimento próximo.</p>
-          <div className="hero-actions"><WhatsAppLink /><a href="#tratamentos" className="button secondary">Conheça os tratamentos <span aria-hidden="true">↓</span></a></div>
+          <div className="hero-actions"><WhatsAppLink /><a href="#clinica" className="button secondary">Conheça nossa localização <span aria-hidden="true">↓</span></a></div>
           <p className="helper">O atendimento e a confirmação de disponibilidade acontecem pelo WhatsApp.</p>
         </div>
         <div className="hero-visual smile-glass" data-reveal>
