@@ -230,3 +230,10 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
 .clinic-photo-stack img { border:1px solid rgba(117,220,255,.28); }
 .text-link,.card-link { color:#73dff5; }
 @supports not (backdrop-filter:blur(10px)) { .button,.glass-note,.feature-card,.team-carousel,.place-grid>div,.map-preview,.treatment-row,.treatments-cta,.result-card,.insurance-logos>span,.faq details,.contact-card,.testimonial-empty,.legal-page section { background:#0a3447; } }
+.map-preview { background-color:#082d42; background-image:linear-gradient(28deg,transparent 42%,rgba(151,225,237,.5) 43%,rgba(151,225,237,.5) 47%,transparent 48%),linear-gradient(104deg,transparent 35%,rgba(151,225,237,.42) 36%,rgba(151,225,237,.42) 40%,transparent 41%); }
+.map-road { z-index:2; color:#d8f8ff!important; font-size:.64rem!important; font-weight:800; opacity:1; text-shadow:0 1px 4px #001923,0 0 8px rgba(91,213,255,.65); }
+.road-one { left:7%; top:47%; }
+.road-two { left:15%; top:12%; }
+.faq details,.faq details.is-visible { opacity:1!important; transform:none!important; color:#eefcff; background:var(--glass-fill)!important; }
+.faq summary { color:#eefcff; }
+.faq details p { color:#b7d1d6; }

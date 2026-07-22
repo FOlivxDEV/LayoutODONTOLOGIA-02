@@ -71,12 +71,14 @@ export const siteConfig = {
       specialty: "Clínica geral e prevenção",
       cro: "CRO 00.001 · simulação",
       bio: "Perfil demonstrativo para visualizar a composição da equipe. Dados profissionais precisam ser substituídos antes da publicação oficial.",
+      photo: "/dra-ana-ficticia.webp",
     },
     {
       name: "Dra. Laura Mendes",
       specialty: "Ortodontia e alinhadores",
       cro: "CRO 00.002 · simulação",
       bio: "Perfil demonstrativo para visualizar a composição da equipe. Dados profissionais precisam ser substituídos antes da publicação oficial.",
+      photo: "/dra-laura-ficticia.webp",
     },
   ] satisfies Professional[],
   faqs: [
