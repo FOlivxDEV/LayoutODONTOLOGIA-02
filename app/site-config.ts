@@ -18,8 +18,8 @@ export const siteConfig = {
     name: "Jr Odontologia",
     legalName: "Jr Odontologia",
     tagline: "Cuidado que acolhe. Odontologia que transforma.",
-    phoneDisplay: "(13) 0000-0000 · simulação",
-    whatsapp: "", // PENDENTE: somente números, com DDI e DDD. Ex.: 5511999999999
+    phoneDisplay: "+55 13 99187-9892",
+    whatsapp: "5513991879892",
     email: "contato@jrodontologia.com.br · simulação",
     address: "Av. Nove de Abril, 123 · endereço simulado",
     city: "Cubatão/SP",
@@ -31,9 +31,9 @@ export const siteConfig = {
   },
   whatsapp: {
     defaultMessage:
-      "Olá! Encontrei a clínica pelo site e gostaria de solicitar um atendimento odontológico.",
+      "Olá! Encontrei a Jr Odontologia pelo site e gostaria de solicitar um orçamento odontológico.",
     treatmentMessage: (treatment: string) =>
-      `Olá! Encontrei no site informações sobre ${treatment} e gostaria de saber mais.`,
+      `Olá! Encontrei no site informações sobre ${treatment} e gostaria de solicitar um orçamento.`,
   },
   seo: {
     title: "Jr Odontologia | Cuidado odontológico humanizado",

@@ -6,7 +6,7 @@ import { getWhatsAppUrl, siteConfig } from "../site-config";
 
 const nav = [
   ["Início", "#inicio"], ["Clínica", "#clinica"], ["Tratamentos", "#tratamentos"],
-  ["Equipe", "#equipe"], ["Depoimentos", "#depoimentos"], ["Dúvidas", "#duvidas"], ["Contato", "#contato"],
+  ["Equipe", "#equipe"], ["Dúvidas", "#duvidas"], ["Contato", "#contato"],
 ] as const;
 
 function trackConversion(context: string) {
@@ -44,7 +44,7 @@ export function SiteShell() {
     <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
     <header className="site-header">
       <a href="#inicio" className="brand" aria-label="Jr Odontologia — início">
-        <img src="/logo-jr.png" width="96" height="96" alt="Jr Odontologia" />
+        <img src="/logo-jr-transparent.png" width="96" height="96" alt="Jr Odontologia" />
       </a>
       <nav id="main-nav" className={menuOpen ? "nav open" : "nav"} aria-label="Navegação principal">
         {nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
@@ -59,12 +59,12 @@ export function SiteShell() {
       <section className="hero" id="inicio">
         <div className="orb orb-one" aria-hidden="true"></div><div className="orb orb-two" aria-hidden="true"></div>
         <div className="hero-content" data-reveal>
-          <p className="eyebrow"><span></span> Odontologia humanizada</p>
+          <p className="eyebrow"><span></span> JR Odontologia</p>
           <h1>Seu sorriso merece <em>cuidado por inteiro.</em></h1>
-          <p className="hero-copy">Acolhimento, escuta e planejamento responsável em cada etapa do seu cuidado odontológico.</p>
+          <p className="hero-copy">Clínica odontológica em Cubatão, SP, que reúne profissionais reconhecidos na Baixada Santista. Oferecemos cuidado completo, da prevenção e manutenção aos tratamentos estéticos, sempre com avaliação responsável e atendimento próximo.</p>
           <div className="hero-actions"><WhatsAppLink /><a href="#tratamentos" className="button secondary">Conheça os tratamentos <span aria-hidden="true">↓</span></a></div>
           <p className="helper">O atendimento e a confirmação de disponibilidade acontecem pelo WhatsApp.</p>
-          <ul className="trust-list" aria-label="Diferenciais em destaque"><li><b>01</b> Atendimento humanizado</li><li><b>02</b> Planejamento individual</li><li><b>03</b> Ambiente acolhedor</li></ul>
+          <ul className="trust-list" aria-label="Informações em destaque"><li><b>01</b> Endereço em Cubatão</li><li><b>02</b> Particular e convênios</li><li><b>03</b> Referência na Baixada Santista</li></ul>
         </div>
         <div className="hero-visual smile-glass" data-reveal>
           <img src="/hero-smile.png" width="1024" height="1536" alt="Sorriso natural iluminado sobre fundo preto" fetchPriority="high" />
@@ -84,12 +84,13 @@ export function SiteShell() {
 
       <section className="section place-showcase" data-reveal>
         <div className="place-main"><p className="eyebrow"><span></span> Consultório odontológico em Cubatão</p><h2>Fácil de encontrar.<br />Bom de chegar.</h2><p>Uma localização central para receber pacientes de Cubatão e da Baixada Santista. Endereço e canais exibidos em caráter demonstrativo.</p><div className="place-actions"><a href={siteConfig.clinic.mapUrl} target="_blank" rel="noopener noreferrer" className="button primary">Visualizar no Google Maps ↗</a><WhatsAppLink label="Falar pelo WhatsApp" className="button secondary" /></div></div>
-        <div className="place-grid"><div><span>Endereço</span><strong>{siteConfig.clinic.address}</strong><small>{siteConfig.clinic.neighborhood} · {siteConfig.clinic.city}</small></div><div><span>Instagram</span><strong>@jrodontologia.cubatao</strong><a href={siteConfig.clinic.instagram} target="_blank" rel="noopener noreferrer">Abrir perfil ↗</a></div><div><span>WhatsApp</span><strong>{siteConfig.clinic.phoneDisplay}</strong><small>Número real pendente</small></div><div className="map-tile"><span>Google Maps</span><strong>JR</strong><small>Cubatão · SP</small></div></div>
+        <div className="place-grid"><div><span>Endereço</span><strong>{siteConfig.clinic.address}</strong><small>{siteConfig.clinic.neighborhood} · {siteConfig.clinic.city}</small></div><div><span>Instagram</span><strong>@jrodontologia.cubatao</strong><a href={siteConfig.clinic.instagram} target="_blank" rel="noopener noreferrer">Abrir perfil ↗</a></div><div><span>WhatsApp</span><strong>{siteConfig.clinic.phoneDisplay}</strong><small>Atendimento e orçamento pelo aplicativo</small></div><a className="map-preview" href={siteConfig.clinic.mapUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir a localização da Jr Odontologia no Google Maps"><span className="map-road road-one">R. Ceará</span><span className="map-road road-two">Av. Nove de Abril</span><i aria-hidden="true"></i><strong>J/R Consultório<br />Odontológico</strong><small>Abrir no Google Maps ↗</small></a></div>
       </section>
 
       <section className="section treatments" id="tratamentos">
         <div className="section-heading split" data-reveal><div><p className="eyebrow"><span></span> Tratamentos</p><h2>Cuidado completo para cada fase do seu sorriso.</h2></div><p>As informações têm caráter educativo. A indicação de qualquer tratamento depende de avaliação profissional.</p></div>
-        <div className="treatment-list">{siteConfig.treatments.map((item, i) => <article className="treatment-row" key={item.name} data-reveal><div className={`treatment-photo treatment-photo-${i % 4}`} role="img" aria-label={`Imagem ilustrativa de ${item.name}`}></div><div className="treatment-body"><span className="treatment-index">{String(i + 1).padStart(2, "0")}</span><h3>{item.name}</h3><p>{item.description}</p><WhatsAppLink treatment={item.name} label="Saiba mais pelo WhatsApp" className="card-link" /></div></article>)}</div>
+        <div className="treatment-list">{siteConfig.treatments.map((item, i) => <article className="treatment-row" key={item.name} data-reveal><div className={`treatment-photo treatment-photo-${i % 4}`} role="img" aria-label={`Imagem ilustrativa de ${item.name}`}></div><div className="treatment-body"><span className="treatment-index">{String(i + 1).padStart(2, "0")}</span><h3>{item.name}</h3><p>{item.description}</p></div></article>)}</div>
+        <div className="treatments-cta" data-reveal><p>Quer entender qual cuidado combina com a sua necessidade?</p><WhatsAppLink label="Solicitar orçamento pelo WhatsApp" /></div>
       </section>
 
       <section className="results" aria-labelledby="resultados-title" data-reveal>
@@ -106,11 +107,6 @@ export function SiteShell() {
       </section>
 
       <section className="section insurance" data-reveal><div><p className="eyebrow"><span></span> Convênios odontológicos</p><h2>Consulte a cobertura do seu plano.</h2><p>Operadoras abaixo são exemplos para composição visual. A rede credenciada e as condições precisam ser confirmadas com a clínica e com o convênio.</p><WhatsAppLink label="Pedir orçamento pelo WhatsApp" /></div><div className="insurance-logos">{["OdontoPrev", "Amil Dental", "SulAmérica Odonto", "Bradesco Dental", "Porto Odonto", "Uniodonto"].map(name => <span key={name}>{name}<small>simulação</small></span>)}</div></section>
-
-      <section className="section testimonials" id="depoimentos" data-reveal>
-        <div><p className="eyebrow"><span></span> Experiências reais</p><h2>A confiança dos pacientes merece responsabilidade.</h2></div>
-        <div className="testimonial-empty"><span aria-hidden="true">“</span><p>Esta área será publicada quando a clínica fornecer avaliações autorizadas ou um link para avaliações públicas verificáveis.</p><small>Nenhum depoimento foi inventado e nenhuma informação de saúde é exibida.</small></div>
-      </section>
 
       <section className="section faq" id="duvidas" data-reveal>
         <div className="section-heading"><p className="eyebrow dark"><span></span> Dúvidas frequentes</p><h2>Informação clara antes do primeiro contato.</h2></div>
