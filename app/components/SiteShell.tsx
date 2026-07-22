@@ -25,6 +25,7 @@ function WhatsAppLink({ label = "Agendar pelo WhatsApp", treatment, className = 
 export function SiteShell() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [clinicSlide, setClinicSlide] = useState(0);
+  const [teamIndex, setTeamIndex] = useState(0);
   useEffect(() => {
     const close = (event: KeyboardEvent) => event.key === "Escape" && setMenuOpen(false);
     document.addEventListener("keydown", close);
@@ -41,6 +42,11 @@ export function SiteShell() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(() => setClinicSlide((current) => (current + 1) % 2), 3000);
+    return () => window.clearInterval(timer);
+  }, []);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setInterval(() => setTeamIndex((current) => (current + 1) % siteConfig.professionals.length), 8000);
     return () => window.clearInterval(timer);
   }, []);
 
@@ -68,7 +74,6 @@ export function SiteShell() {
           <p className="hero-copy">Clínica odontológica em Cubatão, SP, que reúne profissionais reconhecidos na Baixada Santista. Oferecemos cuidado completo, da prevenção e manutenção aos tratamentos estéticos, sempre com avaliação responsável e atendimento próximo.</p>
           <div className="hero-actions"><WhatsAppLink /><a href="#tratamentos" className="button secondary">Conheça os tratamentos <span aria-hidden="true">↓</span></a></div>
           <p className="helper">O atendimento e a confirmação de disponibilidade acontecem pelo WhatsApp.</p>
-          <ul className="trust-list" aria-label="Informações em destaque"><li><b>01</b> Endereço em Cubatão</li><li><b>02</b> Particular e convênios</li><li><b>03</b> Referência na Baixada Santista</li></ul>
         </div>
         <div className="hero-visual smile-glass" data-reveal>
           <img src="/hero-smile.png" width="1024" height="1536" alt="Sorriso natural iluminado sobre fundo preto" fetchPriority="high" />
@@ -76,24 +81,20 @@ export function SiteShell() {
         </div>
       </section>
 
-      <section className="section clinic-story" aria-labelledby="clinica-story-title">
-        <div className="story-photo" data-reveal><img src="/clinic-team.png" width="1704" height="923" alt="Simulação visual da equipe da Jr Odontologia com três profissionais" loading="lazy" /><span>Imagem ilustrativa da equipe</span></div>
-        <div className="story-copy" data-reveal><p className="eyebrow dark"><span></span> Três profissionais, um só cuidado</p><h2 id="clinica-story-title">Odontologia completa, feita por uma equipe que trabalha junto.</h2><p>Na Jr Odontologia, três cirurgiões-dentistas reúnem diferentes áreas de atuação para acompanhar prevenção, estética, reabilitação e urgências com uma visão integrada. Cada caso é conversado em equipe quando necessário, sempre com explicações claras e um plano adequado à realidade de cada pessoa.</p><div className="story-highlights"><div><strong>3</strong><span>profissionais atendendo na clínica</span></div><div><strong>10</strong><span>anos de funcionamento</span></div><div><strong>+20</strong><span>procedimentos odontológicos</span></div></div><WhatsAppLink label="Conhecer a clínica pelo WhatsApp" /></div>
+      <section className="section clinic-story" id="equipe" aria-labelledby="clinica-story-title">
+        <div className="team-carousel" data-reveal aria-roledescription="carrossel" aria-label="Profissionais da Jr Odontologia"><div className="team-carousel-track" style={{ transform: `translateX(-${teamIndex * 100}%)` }}>{siteConfig.professionals.map((person, i) => <article className="team-slide" key={person.name} aria-hidden={i !== teamIndex}>{person.photo ? <div className="portrait-photo"><img src={person.photo} width="1024" height="1536" alt={`Modelo ilustrativo representando ${person.name}`} /></div> : <div className="portrait-placeholder" aria-label="Fotografia profissional pendente"><span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><small>Foto pendente</small></div>}<div className="team-slide-copy"><p className="status">SIMULAÇÃO · VALIDAR DADOS</p><h3>{person.name}</h3><p className="specialty">{person.specialty} · {person.cro}</p><p>{person.bio}</p>{"highlights" in person && person.highlights && <ul className="professional-highlights">{person.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>}</div></article>)}</div><div className="team-carousel-controls"><button type="button" onClick={() => setTeamIndex((teamIndex - 1 + siteConfig.professionals.length) % siteConfig.professionals.length)} aria-label="Profissional anterior">←</button><span>{teamIndex + 1} / {siteConfig.professionals.length}</span><button type="button" onClick={() => setTeamIndex((teamIndex + 1) % siteConfig.professionals.length)} aria-label="Próximo profissional">→</button></div></div>
+        <div className="story-copy" data-reveal><p className="eyebrow dark"><span></span> Três profissionais, um só cuidado</p><h2 id="clinica-story-title">Odontologia completa, feita por uma equipe que trabalha junto.</h2><p>Na Jr Odontologia, três cirurgiões-dentistas reúnem diferentes áreas de atuação para acompanhar prevenção, estética, reabilitação e urgências com uma visão integrada. Cada caso é conversado em equipe quando necessário, sempre com explicações claras e um plano adequado à realidade de cada pessoa.</p><WhatsAppLink label="Conhecer a clínica pelo WhatsApp" /></div>
       </section>
 
-      <section className="section about" id="clinica">
-        <button className="clinic-photo-stack" type="button" data-reveal onClick={() => setClinicSlide((current) => (current + 1) % 2)} aria-label="Alternar entre foto ilustrativa da fachada e do consultório"><img className={clinicSlide === 0 ? "active" : ""} src="/clinic-facade-illustrative.png" width="1024" height="1280" alt="Imagem ilustrativa da fachada de uma clínica odontológica" /><img className={clinicSlide === 1 ? "active" : ""} src="/clinic-office-illustrative.png" width="1024" height="1280" alt="Imagem ilustrativa de um consultório odontológico" /><span>Imagem ilustrativa · toque para alternar</span><i aria-hidden="true">{clinicSlide + 1} / 2</i></button>
-        <div className="about-copy" data-reveal><p className="eyebrow dark"><span></span> Jr Odontologia</p><h2>Um espaço pensado para você se sentir bem.</h2><p>Atendimento próximo, ambiente organizado e cuidado odontológico para toda a família. As informações de localização e horários abaixo são uma simulação visual e precisam ser confirmadas pela clínica.</p><div className="values"><div><strong>Localização</strong><p>{siteConfig.clinic.address}<br />{siteConfig.clinic.neighborhood} · {siteConfig.clinic.city}</p><a href={siteConfig.clinic.mapUrl} target="_blank" rel="noopener noreferrer" className="mini-link">Veja no Google Maps ↗</a></div><div><strong>Horários de atendimento</strong><p>{siteConfig.clinic.hours}</p></div></div><a href="#equipe" className="text-link">Conheça os três profissionais <span aria-hidden="true">→</span></a></div>
-      </section>
-
-      <section className="section place-showcase" data-reveal>
+      <section className="section place-showcase" id="clinica" data-reveal>
         <div className="place-main"><p className="eyebrow"><span></span> Consultório odontológico em Cubatão</p><h2>Fácil de encontrar.<br />Bom de chegar.</h2><p>Uma localização central para receber pacientes de Cubatão e da Baixada Santista. Endereço e canais exibidos em caráter demonstrativo.</p><div className="place-actions"><a href={siteConfig.clinic.mapUrl} target="_blank" rel="noopener noreferrer" className="button primary">Visualizar no Google Maps ↗</a><WhatsAppLink label="Falar pelo WhatsApp" className="button secondary" /></div></div>
+        <button className="clinic-photo-stack compact" type="button" onClick={() => setClinicSlide((current) => (current + 1) % 2)} aria-label="Alternar entre foto ilustrativa da fachada e do consultório"><img className={clinicSlide === 0 ? "active" : ""} src="/clinic-facade-illustrative.png" width="1024" height="1280" alt="Imagem ilustrativa da fachada de uma clínica odontológica" /><img className={clinicSlide === 1 ? "active" : ""} src="/clinic-office-illustrative.png" width="1024" height="1280" alt="Imagem ilustrativa de um consultório odontológico" /><span>Imagem ilustrativa · toque para alternar</span><i aria-hidden="true">{clinicSlide + 1} / 2</i></button>
         <div className="place-grid"><div><span>Endereço</span><strong>{siteConfig.clinic.address}</strong><small>{siteConfig.clinic.neighborhood} · {siteConfig.clinic.city}</small></div><div><span>Instagram</span><strong>@jrodontologia.cubatao</strong><a href={siteConfig.clinic.instagram} target="_blank" rel="noopener noreferrer">Abrir perfil ↗</a></div><div><span>WhatsApp</span><strong>{siteConfig.clinic.phoneDisplay}</strong><small>Atendimento e orçamento pelo aplicativo</small></div><a className="map-preview" href={siteConfig.clinic.mapUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir a localização da Jr Odontologia no Google Maps"><span className="map-road road-one">R. Ceará</span><span className="map-road road-two">Av. Nove de Abril</span><i aria-hidden="true"></i><strong>J/R Consultório<br />Odontológico</strong><small>Abrir no Google Maps ↗</small></a></div>
       </section>
 
       <section className="section treatments" id="tratamentos">
         <div className="section-heading split" data-reveal><div><p className="eyebrow"><span></span> Tratamentos</p><h2>Cuidado completo para cada fase do seu sorriso.</h2></div><p>As informações têm caráter educativo. A indicação de qualquer tratamento depende de avaliação profissional.</p></div>
-        <div className="treatment-list">{siteConfig.treatments.map((item, i) => <article className="treatment-row" key={item.name} data-reveal><div className={`treatment-photo treatment-photo-${i % 4}`} role="img" aria-label={`Imagem ilustrativa de ${item.name}`}></div><div className="treatment-body"><span className="treatment-index">{String(i + 1).padStart(2, "0")}</span><h3>{item.name}</h3><p>{item.description}</p></div></article>)}</div>
+        <div className="treatment-list">{siteConfig.treatments.map((item, i) => <details className="treatment-row" key={item.name} data-reveal><summary><div className={`treatment-photo treatment-photo-${i % 4}`} role="img" aria-label={`Imagem ilustrativa de ${item.name}`}></div><div className="treatment-body"><span className="treatment-index">{String(i + 1).padStart(2, "0")}</span><h3>{item.name}</h3><i aria-hidden="true">+</i></div></summary><p>{item.description}</p></details>)}</div>
         <div className="treatments-cta" data-reveal><p>Quer entender qual cuidado combina com a sua necessidade?</p><WhatsAppLink label="Solicitar orçamento pelo WhatsApp" /></div>
       </section>
 
@@ -103,11 +104,6 @@ export function SiteShell() {
           <div className="results-track">{[0,1].map(loop => <div className="results-set" key={loop} aria-hidden={loop === 1}>{[0,1,2,3].map((index) => <figure className="result-card" key={`${loop}-${index}`}><div className={`result-image result-image-${index}`} role="img" aria-label={loop === 0 ? `Comparativo odontológico demonstrativo ${index + 1}` : undefined}></div><figcaption><span>0{index + 1}</span>Resultado demonstrativo</figcaption></figure>)}</div>)}</div>
         </div>
         <p className="results-note">O carrossel pausa ao receber foco ou ao passar o mouse.</p>
-      </section>
-
-      <section className="section team" id="equipe">
-        <div className="section-heading" data-reveal><p className="eyebrow dark"><span></span> Nossa equipe</p><h2>Três profissionais, cuidado compartilhado.</h2><p className="section-intro">Composição demonstrativa solicitada para visualizar a equipe. Nomes, CROs, experiência e especialidades devem ser validados antes da publicação oficial.</p></div>
-        <div className="team-grid">{siteConfig.professionals.map((person, i) => <article className={`team-card ${i === 0 ? "featured" : ""}`} key={i} data-reveal>{person.photo ? <div className="portrait-photo"><img src={person.photo} width="1024" height="1536" alt={`Modelo ilustrativo representando ${person.name}`} loading="lazy" /></div> : <div className="portrait-placeholder" aria-label="Fotografia profissional pendente"><span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><small>Foto pendente</small></div>}<div><p className="status">SIMULAÇÃO · VALIDAR DADOS</p><h3>{person.name}</h3><p className="specialty">{person.specialty} · {person.cro}</p><p>{person.bio}</p>{"highlights" in person && person.highlights && <ul className="professional-highlights">{person.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>}{i === 0 && <WhatsAppLink treatment={`atendimento com ${person.name}`} label="Falar com a equipe" className="card-link" />}</div></article>)}</div>
       </section>
 
       <section className="section insurance" id="convenios" data-reveal><div><p className="eyebrow"><span></span> Convênios odontológicos</p><h2>Consulte a cobertura do seu plano.</h2><p>Operadoras abaixo são exemplos para composição visual. A rede credenciada e as condições precisam ser confirmadas com a clínica e com o convênio.</p><WhatsAppLink label="Pedir orçamento pelo WhatsApp" /></div><div className="insurance-logos">{["OdontoPrev", "Amil Dental", "SulAmérica Odonto", "Bradesco Dental", "Porto Odonto", "Uniodonto"].map(name => <span key={name}>{name}<small>simulação</small></span>)}</div></section>
