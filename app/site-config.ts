@@ -25,7 +25,7 @@ export const siteConfig = {
     city: "Cubatão/SP",
     neighborhood: "Centro",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=consultorio+odontologico+Cubatão+SP",
-    hours: "Seg–Sex, 8h–18h · Sáb, 8h–12h (simulação)",
+    hours: "Seg–Sex 09h às 18h\nExceto quarta-feira\nSáb 08h às 12h",
     instagram: "https://instagram.com/jrodontologia.cubatao",
     technicalLead: "[INFORMAR RESPONSÁVEL TÉCNICO E CRO]",
   },

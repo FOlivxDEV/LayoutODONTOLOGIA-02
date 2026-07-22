@@ -6,7 +6,7 @@ import { getWhatsAppUrl, siteConfig } from "../site-config";
 
 const nav = [
   ["Início", "#inicio"], ["Clínica", "#clinica"], ["Tratamentos", "#tratamentos"],
-  ["Equipe", "#equipe"], ["Dúvidas", "#duvidas"], ["Contato", "#contato"],
+  ["Equipe", "#equipe"], ["Convênios", "#convenios"], ["Dúvidas", "#duvidas"], ["Contato", "#contato"],
 ] as const;
 
 function trackConversion(context: string) {
@@ -18,11 +18,13 @@ function WhatsAppLink({ label = "Agendar pelo WhatsApp", treatment, className = 
   const href = getWhatsAppUrl(message);
   if (!href && className === "floating-whatsapp") return null;
   if (!href) return <span className={`${className} disabled`} aria-disabled="true" title="Configure o WhatsApp em app/site-config.ts">WhatsApp em configuração</span>;
+  if (className === "floating-whatsapp") return <a className={className} href={href} target="_blank" rel="noopener noreferrer" aria-label="Solicitar orçamento pelo WhatsApp" onClick={() => trackConversion(treatment ?? "geral")}><span className="whatsapp-mark" aria-hidden="true">☎</span></a>;
   return <a className={className} href={href} target="_blank" rel="noopener noreferrer" onClick={() => trackConversion(treatment ?? "geral")}>{label}<span aria-hidden="true"> ↗</span></a>;
 }
 
 export function SiteShell() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [clinicSlide, setClinicSlide] = useState(0);
   useEffect(() => {
     const close = (event: KeyboardEvent) => event.key === "Escape" && setMenuOpen(false);
     document.addEventListener("keydown", close);
@@ -30,14 +32,16 @@ export function SiteShell() {
     document.documentElement.classList.add("reveal-ready");
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          (entry.target as HTMLElement).classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
+        (entry.target as HTMLElement).classList.toggle("is-visible", entry.isIntersecting);
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -7% 0px" });
     items.forEach((item) => observer.observe(item));
     return () => { document.removeEventListener("keydown", close); observer.disconnect(); };
+  }, []);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setInterval(() => setClinicSlide((current) => (current + 1) % 2), 3000);
+    return () => window.clearInterval(timer);
   }, []);
 
   return <>
@@ -74,11 +78,11 @@ export function SiteShell() {
 
       <section className="section clinic-story" aria-labelledby="clinica-story-title">
         <div className="story-photo" data-reveal><img src="/clinic-team.png" width="1704" height="923" alt="Simulação visual da equipe da Jr Odontologia com três profissionais" loading="lazy" /><span>Imagem ilustrativa da equipe</span></div>
-        <div className="story-copy" data-reveal><p className="eyebrow dark"><span></span> Três profissionais, um só cuidado</p><h2 id="clinica-story-title">Odontologia completa, feita por uma equipe que trabalha junto.</h2><p>Na Jr Odontologia, três cirurgiões-dentistas reúnem diferentes áreas de atuação para acompanhar prevenção, estética, reabilitação e urgências com uma visão integrada. Cada caso é conversado em equipe quando necessário, sempre com explicações claras e um plano adequado à realidade de cada pessoa.</p><div className="story-highlights"><div><strong>3</strong><span>profissionais atendendo na clínica</span></div><div><strong>1</strong><span>plano de cuidado coordenado</span></div><div><strong>360°</strong><span>visão integral do seu sorriso</span></div></div><WhatsAppLink label="Conhecer a clínica pelo WhatsApp" /></div>
+        <div className="story-copy" data-reveal><p className="eyebrow dark"><span></span> Três profissionais, um só cuidado</p><h2 id="clinica-story-title">Odontologia completa, feita por uma equipe que trabalha junto.</h2><p>Na Jr Odontologia, três cirurgiões-dentistas reúnem diferentes áreas de atuação para acompanhar prevenção, estética, reabilitação e urgências com uma visão integrada. Cada caso é conversado em equipe quando necessário, sempre com explicações claras e um plano adequado à realidade de cada pessoa.</p><div className="story-highlights"><div><strong>3</strong><span>profissionais atendendo na clínica</span></div><div><strong>10</strong><span>anos de funcionamento</span></div><div><strong>+20</strong><span>procedimentos odontológicos</span></div></div><WhatsAppLink label="Conhecer a clínica pelo WhatsApp" /></div>
       </section>
 
       <section className="section about" id="clinica">
-        <div className="about-art" data-reveal aria-label="Composição visual da Jr Odontologia"><div className="arch"><span>Jr Odontologia</span><small>consultório em Cubatão</small></div></div>
+        <button className="clinic-photo-stack" type="button" data-reveal onClick={() => setClinicSlide((current) => (current + 1) % 2)} aria-label="Alternar entre foto ilustrativa da fachada e do consultório"><img className={clinicSlide === 0 ? "active" : ""} src="/clinic-facade-illustrative.png" width="1024" height="1280" alt="Imagem ilustrativa da fachada de uma clínica odontológica" /><img className={clinicSlide === 1 ? "active" : ""} src="/clinic-office-illustrative.png" width="1024" height="1280" alt="Imagem ilustrativa de um consultório odontológico" /><span>Imagem ilustrativa · toque para alternar</span><i aria-hidden="true">{clinicSlide + 1} / 2</i></button>
         <div className="about-copy" data-reveal><p className="eyebrow dark"><span></span> Jr Odontologia</p><h2>Um espaço pensado para você se sentir bem.</h2><p>Atendimento próximo, ambiente organizado e cuidado odontológico para toda a família. As informações de localização e horários abaixo são uma simulação visual e precisam ser confirmadas pela clínica.</p><div className="values"><div><strong>Localização</strong><p>{siteConfig.clinic.address}<br />{siteConfig.clinic.neighborhood} · {siteConfig.clinic.city}</p><a href={siteConfig.clinic.mapUrl} target="_blank" rel="noopener noreferrer" className="mini-link">Veja no Google Maps ↗</a></div><div><strong>Horários de atendimento</strong><p>{siteConfig.clinic.hours}</p></div></div><a href="#equipe" className="text-link">Conheça os três profissionais <span aria-hidden="true">→</span></a></div>
       </section>
 
@@ -106,11 +110,11 @@ export function SiteShell() {
         <div className="team-grid">{siteConfig.professionals.map((person, i) => <article className={`team-card ${i === 0 ? "featured" : ""}`} key={i} data-reveal>{person.photo ? <div className="portrait-photo"><img src={person.photo} width="1024" height="1536" alt={`Modelo ilustrativo representando ${person.name}`} loading="lazy" /></div> : <div className="portrait-placeholder" aria-label="Fotografia profissional pendente"><span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><small>Foto pendente</small></div>}<div><p className="status">SIMULAÇÃO · VALIDAR DADOS</p><h3>{person.name}</h3><p className="specialty">{person.specialty} · {person.cro}</p><p>{person.bio}</p>{"highlights" in person && person.highlights && <ul className="professional-highlights">{person.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>}{i === 0 && <WhatsAppLink treatment={`atendimento com ${person.name}`} label="Falar com a equipe" className="card-link" />}</div></article>)}</div>
       </section>
 
-      <section className="section insurance" data-reveal><div><p className="eyebrow"><span></span> Convênios odontológicos</p><h2>Consulte a cobertura do seu plano.</h2><p>Operadoras abaixo são exemplos para composição visual. A rede credenciada e as condições precisam ser confirmadas com a clínica e com o convênio.</p><WhatsAppLink label="Pedir orçamento pelo WhatsApp" /></div><div className="insurance-logos">{["OdontoPrev", "Amil Dental", "SulAmérica Odonto", "Bradesco Dental", "Porto Odonto", "Uniodonto"].map(name => <span key={name}>{name}<small>simulação</small></span>)}</div></section>
+      <section className="section insurance" id="convenios" data-reveal><div><p className="eyebrow"><span></span> Convênios odontológicos</p><h2>Consulte a cobertura do seu plano.</h2><p>Operadoras abaixo são exemplos para composição visual. A rede credenciada e as condições precisam ser confirmadas com a clínica e com o convênio.</p><WhatsAppLink label="Pedir orçamento pelo WhatsApp" /></div><div className="insurance-logos">{["OdontoPrev", "Amil Dental", "SulAmérica Odonto", "Bradesco Dental", "Porto Odonto", "Uniodonto"].map(name => <span key={name}>{name}<small>simulação</small></span>)}</div></section>
 
       <section className="section faq" id="duvidas" data-reveal>
         <div className="section-heading"><p className="eyebrow dark"><span></span> Dúvidas frequentes</p><h2>Informação clara antes do primeiro contato.</h2></div>
-        <div className="faq-list">{siteConfig.faqs.map((faq, i) => <details key={faq.question}><summary><span>{String(i + 1).padStart(2, "0")}</span>{faq.question}<i aria-hidden="true">+</i></summary><p>{faq.answer}</p></details>)}</div>
+        <div className="faq-list">{siteConfig.faqs.map((faq, i) => <details key={faq.question} data-reveal><summary><span>{String(i + 1).padStart(2, "0")}</span>{faq.question}<i aria-hidden="true">+</i></summary><p>{faq.answer}</p></details>)}</div>
       </section>
 
       <section className="section contact" id="contato" data-reveal>
