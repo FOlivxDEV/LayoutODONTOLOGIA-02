@@ -30,3 +30,17 @@ test("inclui metadados, rotas legais e segurança", async () => {
   assert.match(worker, /X-Content-Type-Options/);
   assert.match(privacy, /Política de Privacidade/);
 });
+
+test("integra conteúdo institucional ao Supabase com fallback seguro", async () => {
+  const [loader, migration, envExample] = await Promise.all([
+    readFile(new URL("../app/supabase-content.ts", import.meta.url), "utf8"),
+    readFile(new URL("../supabase/migrations/20260722163757_create_public_site_content.sql", import.meta.url), "utf8"),
+    readFile(new URL("../.env.example", import.meta.url), "utf8"),
+  ]);
+  assert.match(loader, /NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY/);
+  assert.match(loader, /return null/);
+  assert.match(migration, /enable row level security/i);
+  assert.match(migration, /grant select/i);
+  assert.doesNotMatch(envExample, /service_role\s*=/i);
+  assert.doesNotMatch(envExample, /sb_secret_[A-Za-z0-9_-]+/);
+});

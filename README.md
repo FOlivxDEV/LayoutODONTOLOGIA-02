@@ -30,9 +30,13 @@ Os cabeçalhos são definidos em `worker/index.ts`. O projeto não precisa de va
 
 Não há banner de cookies porque não existem ferramentas não essenciais ativas. Se analytics, marketing, formulários ou banco forem introduzidos, faça uma nova revisão LGPD antes de publicar.
 
-## Banco de dados
+## Supabase
 
-Não há dados persistentes para migrar e nenhuma funcionalidade atual requer Supabase. As pastas vazias de scaffolding não constituem um banco ativo. Uma futura integração deve nascer de uma necessidade aprovada e ter esquema, RLS, retenção e controles documentados.
+O conteúdo institucional é armazenado no projeto Supabase `owpvdetxhzuwvtmhacdz`, na tabela `public.site_content`. A tabela contém somente clínica, profissionais, tratamentos, convênios e perguntas frequentes — nunca dados de pacientes, agenda ou prontuário.
+
+Configure `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` conforme `.env.example`. Use apenas a chave publicável: nunca exponha `service_role`, `sb_secret` ou a senha do banco. O site consulta o conteúdo no servidor e usa `app/site-config.ts` como fallback seguro quando o Supabase estiver indisponível.
+
+A tabela possui RLS ativa, política pública somente para leitura e nenhum `INSERT`, `UPDATE` ou `DELETE` concedido a visitantes. A migration correspondente está em `supabase/migrations/`.
 
 ## Publicação
 
