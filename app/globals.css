@@ -166,7 +166,7 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
 .category-heading p { margin:0; color:#b7d1d6; font-size:.86rem; line-height:1.65; }
 .category-heading i { position:absolute; right:24px; top:50%; font-style:normal; font-size:1.8rem; transition:transform .25s ease; }
 .treatment-category[open] .category-heading i { transform:rotate(45deg); }
-.procedure-grid { display:grid; gap:10px; padding:0 18px 20px; }
+.procedure-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; padding:0 18px 20px; }
 .procedure-grid article { padding:17px; border:1px solid rgba(114,220,247,.22); border-radius:16px; background:rgba(2,25,40,.42); }
 .procedure-grid h4 { margin:0 0 7px; color:#eefcff; font-size:.92rem; }
 .procedure-grid p { margin:0; color:#b7d1d6; font-size:.76rem; line-height:1.55; }
