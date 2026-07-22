@@ -93,7 +93,7 @@ export function SiteShell() {
       </section>
 
       <section className="section treatments" id="tratamentos">
-        <div className="section-heading split" data-reveal><div><p className="eyebrow"><span></span> Tratamentos</p><h2>Três áreas de cuidado, um atendimento integrado.</h2></div><p>Explore os procedimentos odontológicos, de harmonização facial e de estética oferecidos pela equipe. Cada indicação é definida somente após avaliação profissional.</p></div>
+        <div className="section-heading split" data-reveal><div><p className="eyebrow"><span></span> Tratamentos</p><h2>Duas áreas de cuidado, um atendimento integrado.</h2></div><p>Explore os procedimentos odontológicos e de estética do sorriso oferecidos pela equipe. Cada indicação é definida somente após avaliação profissional.</p></div>
         <div className="treatment-categories">{siteConfig.treatmentCategories.map((category, i) => <details className="treatment-category" key={category.name} data-reveal><summary><div className={`category-photo category-photo-${category.image}`} role="img" aria-label={`Imagem representativa de ${category.name}`}></div><div className="category-heading"><span>{String(i + 1).padStart(2, "0")} · {category.procedures.length} opções</span><h3>{category.name}</h3><p>{category.description}</p><i aria-hidden="true">+</i></div></summary><div className="procedure-grid">{category.procedures.map((procedure) => <article key={procedure.name}><h4>{procedure.name}</h4><p>{procedure.description}</p></article>)}</div></details>)}</div>
         <div className="treatments-cta" data-reveal><p>Quer entender qual cuidado combina com a sua necessidade?</p><WhatsAppLink label="Solicitar orçamento pelo WhatsApp" /></div>
       </section>

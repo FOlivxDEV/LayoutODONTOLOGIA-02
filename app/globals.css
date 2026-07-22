@@ -153,13 +153,12 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
 .treatments-cta p { margin:0; color:#d8e7e6; font-weight:700; }
 @media (max-width:620px) { .treatments-cta { align-items:stretch; flex-direction:column; } }
 
-.treatment-categories { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; align-items:start; }
+.treatment-categories { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; align-items:start; }
 .treatment-category { overflow:hidden; border:1px solid var(--glass-edge-soft); border-radius:24px; background:var(--glass-fill); box-shadow:var(--glass-shadow); backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%); }
 .treatment-category summary { display:block; list-style:none; cursor:pointer; }
 .treatment-category summary::-webkit-details-marker { display:none; }
 .category-photo { height:220px; background-image:url('/treatments-grid.png'); background-size:200% 200%; background-repeat:no-repeat; border-bottom:1px solid rgba(114,220,247,.42); }
 .category-photo-procedimentos { background-position:0 0; }
-.category-photo-harmonizacao { background-position:100% 100%; }
 .category-photo-estetica { background-position:0 100%; }
 .category-heading { position:relative; min-height:205px; padding:26px 58px 28px 26px; }
 .category-heading>span { color:#72dcf7; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; }

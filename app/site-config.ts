@@ -1,5 +1,5 @@
 export type Procedure = { name: string; description: string };
-export type TreatmentCategory = { name: string; description: string; image: "procedimentos" | "harmonizacao" | "estetica"; procedures: readonly Procedure[] };
+export type TreatmentCategory = { name: string; description: string; image: "procedimentos" | "estetica"; procedures: readonly Procedure[] };
 export type Professional = { name: string; specialty: string; cro: string; bio: string; highlights?: readonly string[]; photo?: string };
 
 export const siteConfig = {
@@ -18,7 +18,7 @@ export const siteConfig = {
   },
   seo: {
     title: "Jr Odontologia | Clínica odontológica em Cubatão",
-    description: "Tratamentos odontológicos, harmonização facial e estética no Centro de Cubatão. Conheça a Jr Odontologia e fale com a equipe pelo WhatsApp.",
+    description: "Tratamentos odontológicos e estética do sorriso no Centro de Cubatão. Conheça a Jr Odontologia e fale com a equipe pelo WhatsApp.",
     canonicalUrl: "https://jr-odontologia.konektplus-dev.chatgpt.site",
   },
   insurances: ["MetLife", "Porto Seguro", "Interodonto", "IMPAO", "AESP", "Santa Casa", "Dimay"],
@@ -32,15 +32,6 @@ export const siteConfig = {
       { name: "Extração dentária", description: "Remoção do dente quando clinicamente indicada, com planejamento e orientação profissional." },
       { name: "Limpeza e raspagem", description: "Cuidados profissionais para prevenção e manutenção da saúde bucal e gengival." },
       { name: "Aparelho estético (ortodontia)", description: "Planejamento ortodôntico com alternativas discretas para alinhamento dos dentes." },
-    ]},
-    { name: "Harmonização facial", description: "Procedimentos faciais avaliados de forma individual, responsável e integrada.", image: "harmonizacao", procedures: [
-      { name: "Gengivectomia e gengivoplastia", description: "Procedimentos gengivais para ajuste de contorno, conforme indicação clínica." },
-      { name: "Harmonização facial", description: "Planejamento personalizado de procedimentos para equilíbrio e proporção facial." },
-      { name: "Botox", description: "Aplicação de toxina botulínica após avaliação profissional e definição de objetivos." },
-      { name: "Preenchimento labial", description: "Procedimento para contorno e volume labial com planejamento individualizado." },
-      { name: "Rinoplastia e rinomodelação", description: "Avaliação das possibilidades cirúrgicas ou não cirúrgicas para a região nasal." },
-      { name: "Bichectomia", description: "Procedimento cirúrgico indicado somente após avaliação anatômica e clínica." },
-      { name: "Lipo de papada", description: "Opções de tratamento para a região submentoniana definidas após avaliação profissional." },
     ]},
     { name: "Estética do sorriso", description: "Opções para cor, forma e acabamento do sorriso, sempre com planejamento clínico.", image: "estetica", procedures: [
       { name: "Lentes de contato", description: "Laminados cerâmicos planejados para necessidades específicas de forma e proporção." },
