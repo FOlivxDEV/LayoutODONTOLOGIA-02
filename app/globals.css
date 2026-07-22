@@ -152,6 +152,28 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
 .treatments-cta { margin:30px auto 0; padding:22px 26px; display:flex; align-items:center; justify-content:space-between; gap:24px; border:1px solid rgba(255,255,255,.14); border-radius:18px; background:rgba(255,255,255,.07); backdrop-filter:blur(12px); }
 .treatments-cta p { margin:0; color:#d8e7e6; font-weight:700; }
 @media (max-width:620px) { .treatments-cta { align-items:stretch; flex-direction:column; } }
+
+.treatment-categories { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; align-items:start; }
+.treatment-category { overflow:hidden; border:1px solid var(--glass-edge-soft); border-radius:24px; background:var(--glass-fill); box-shadow:var(--glass-shadow); backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%); }
+.treatment-category summary { display:block; list-style:none; cursor:pointer; }
+.treatment-category summary::-webkit-details-marker { display:none; }
+.category-photo { height:220px; background-image:url('/treatments-grid.png'); background-size:200% 200%; background-repeat:no-repeat; border-bottom:1px solid rgba(114,220,247,.42); }
+.category-photo-procedimentos { background-position:0 0; }
+.category-photo-harmonizacao { background-position:100% 100%; }
+.category-photo-estetica { background-position:0 100%; }
+.category-heading { position:relative; min-height:205px; padding:26px 58px 28px 26px; }
+.category-heading>span { color:#72dcf7; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; }
+.category-heading h3 { margin:18px 0 10px; font:clamp(1.45rem,2vw,2rem) Georgia,serif; color:#fff; }
+.category-heading p { margin:0; color:#b7d1d6; font-size:.86rem; line-height:1.65; }
+.category-heading i { position:absolute; right:24px; top:50%; font-style:normal; font-size:1.8rem; transition:transform .25s ease; }
+.treatment-category[open] .category-heading i { transform:rotate(45deg); }
+.procedure-grid { display:grid; gap:10px; padding:0 18px 20px; }
+.procedure-grid article { padding:17px; border:1px solid rgba(114,220,247,.22); border-radius:16px; background:rgba(2,25,40,.42); }
+.procedure-grid h4 { margin:0 0 7px; color:#eefcff; font-size:.92rem; }
+.procedure-grid p { margin:0; color:#b7d1d6; font-size:.76rem; line-height:1.55; }
+.treatment-category:hover { transform:translateY(-3px); border-color:var(--glass-edge); }
+@media (max-width:920px) { .treatment-categories { grid-template-columns:1fr; }.treatment-category summary { display:grid; grid-template-columns:38% 62%; }.category-photo { height:100%; min-height:210px; border-bottom:0; border-right:1px solid rgba(114,220,247,.42); }.category-heading { min-height:210px; } }
+@media (max-width:580px) { .treatment-category summary { display:block; }.category-photo { height:190px; min-height:0; border-right:0; }.category-heading { min-height:0; padding:22px 54px 24px 22px; }.procedure-grid { grid-template-columns:1fr; } }
 .values p,.contact-card strong { white-space:pre-line; }
 .clinic-photo-stack { min-height:570px; position:relative; border:0; padding:0; border-radius:22px; background:#0b3440; cursor:pointer; overflow:visible; box-shadow:none; }
 .clinic-photo-stack img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:22px; opacity:0; transform:translate(18px,-14px) scale(.96); transition:opacity .65s ease,transform .65s ease; box-shadow:0 24px 55px rgba(3,31,39,.18); }
