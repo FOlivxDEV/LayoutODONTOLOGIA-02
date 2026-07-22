@@ -31,12 +31,14 @@ export const siteConfig = {
       { name: "Restauração", description: "Reconstrução de áreas comprometidas do dente após avaliação clínica." },
       { name: "Extração dentária", description: "Remoção do dente quando clinicamente indicada, com planejamento e orientação profissional." },
       { name: "Limpeza e raspagem", description: "Cuidados profissionais para prevenção e manutenção da saúde bucal e gengival." },
+      { name: "Periodontia (tratamento de gengiva)", description: "Prevenção, diagnóstico e cuidado das estruturas que sustentam os dentes, conforme avaliação periodontal." },
       { name: "Aparelho estético (ortodontia)", description: "Planejamento ortodôntico com alternativas discretas para alinhamento dos dentes." },
     ]},
     { name: "Estética do sorriso", description: "Opções para cor, forma e acabamento do sorriso, sempre com planejamento clínico.", image: "estetica", procedures: [
       { name: "Lentes de contato", description: "Laminados cerâmicos planejados para necessidades específicas de forma e proporção." },
       { name: "Clareamento dental", description: "Opções de clareamento definidas de acordo com a avaliação e a saúde bucal." },
       { name: "Faceta de resina", description: "Recurso restaurador para ajustes estéticos indicados e planejados individualmente." },
+      { name: "Faceta de porcelana", description: "Laminado cerâmico planejado individualmente para ajustes de forma, proporção e acabamento do sorriso." },
     ]},
   ] satisfies TreatmentCategory[],
   professionals: [
