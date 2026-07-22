@@ -189,7 +189,7 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
 .floating-whatsapp:hover { background:transparent; transform:translateY(-3px) scale(1.04); }
 .floating-whatsapp img { width:100%; height:100%; display:block; object-fit:contain; filter:drop-shadow(0 12px 18px rgba(8,75,42,.3)); }
 @media (max-width:980px) { .clinic-photo-stack { min-height:520px; } }
-@media (max-width:720px) { .faq-list { grid-template-columns:1fr; }.clinic-photo-stack { min-height:430px; }.faq summary { min-height:88px; padding:18px; }.faq details p { padding:0 18px 20px 60px; } }
+@media (max-width:720px) { .faq-list { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }.faq details[open] { grid-column:1/-1; }.clinic-photo-stack { min-height:430px; }.faq summary { min-height:112px; padding:14px; grid-template-columns:28px 1fr 18px; gap:4px; font-size:.78rem; line-height:1.35; }.faq details p { padding:0 18px 20px 46px; }.faq summary i { font-size:1.2rem; } }
 .clinic-story { align-items:start; }
 .team-carousel { position:relative; min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:22px; background:#fff; box-shadow:0 20px 55px rgba(12,52,62,.1); }
 .team-carousel-track { display:flex; transition:transform .65s cubic-bezier(.2,.7,.2,1); }
