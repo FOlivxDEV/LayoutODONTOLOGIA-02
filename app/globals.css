@@ -259,3 +259,73 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
 .faq details,.faq details.is-visible { opacity:1!important; transform:none!important; color:#eefcff; background:var(--glass-fill)!important; }
 .faq summary { color:#eefcff; }
 .faq details p { color:#b7d1d6; }
+
+/* Identidade JR: preto, amarelo e dourado — baseada na fachada da clínica. */
+:root {
+  --navy:#090909;
+  --navy-2:#17140d;
+  --teal:#b99022;
+  --mint:#d8ad32;
+  --paper:#f4f0e6;
+  --ink:#211d14;
+  --muted:#6e6758;
+  --line:rgba(129,96,16,.22);
+  --glass-edge:rgba(239,197,70,.78);
+  --glass-edge-soft:rgba(217,171,43,.42);
+  --glass-fill:linear-gradient(145deg,rgba(43,37,21,.9),rgba(8,8,8,.88));
+  --glass-shadow:inset 0 1px 0 rgba(255,231,153,.28),inset 0 -1px 0 rgba(158,111,7,.28),0 18px 42px rgba(0,0,0,.28),0 0 20px rgba(210,161,31,.1);
+}
+body { background:#f4f0e6; }
+:focus-visible { outline-color:#e5b936; }
+.site-header { background:rgba(10,10,9,.88); }
+.nav { color:#eee7d6; }
+.nav>a:not(.button):hover { color:#ffe08a; background:rgba(224,178,48,.12); }
+.button,.menu-button,.team-carousel-controls button {
+  color:#fff8e6;
+  background:linear-gradient(145deg,rgba(91,70,21,.9),rgba(17,15,10,.9));
+}
+.button:hover,.primary:hover,.secondary:hover {
+  color:#fff9e8;
+  border-color:#ffd96b;
+  background:linear-gradient(145deg,rgba(126,94,20,.94),rgba(31,25,12,.94));
+  box-shadow:inset 0 1px 0 rgba(255,239,181,.38),0 18px 42px rgba(0,0,0,.36),0 0 26px rgba(224,178,48,.2);
+}
+.hero {
+  background:radial-gradient(circle at 25% 20%,rgba(216,173,50,.18),transparent 28%),linear-gradient(135deg,#050505 0%,#12100b 55%,#211a09 100%);
+}
+.orb-one { background:rgba(231,190,62,.15); }
+.orb-two { background:rgba(151,108,11,.16); }
+.eyebrow { color:#f0cd65; }
+.eyebrow.dark { color:#9a7213; }
+h1 em { color:#e3b83c; }
+.hero-copy { color:#d4cdbd; }
+.helper { color:#b3a993; }
+.pulse { background:#d9aa28; box-shadow:0 0 0 6px rgba(217,170,40,.15); }
+.section,.clinic-story,.faq,.results { background:linear-gradient(155deg,#f8f4ea,#eee7d8); }
+.place-showcase,.treatments,.insurance,.contact { background:linear-gradient(145deg,#050505,#1b160b); }
+.place-showcase:before { background:radial-gradient(circle,rgba(218,174,51,.13),transparent 65%); }
+.place-main>p:not(.eyebrow),.section-heading.split>p,.insurance>div:first-child>p:not(.eyebrow),.contact-copy>p:not(.eyebrow) { color:#cfc5ad; }
+.glass-note,.feature-card,.team-carousel,.place-grid>div,.map-preview,.treatment-row,.treatment-category,.treatments-cta,.result-card,.insurance-logos>span,.faq details,.contact-card,.testimonial-empty,.legal-page section { border-color:var(--glass-edge-soft); background:var(--glass-fill); box-shadow:var(--glass-shadow); }
+.feature-card:hover,.place-grid>div:hover,.map-preview:hover,.treatment-row:hover,.treatment-category:hover,.result-card:hover,.insurance-logos>span:hover,.faq details:hover { border-color:var(--glass-edge); box-shadow:inset 0 1px 0 rgba(255,236,168,.3),0 22px 48px rgba(0,0,0,.34),0 0 24px rgba(218,174,51,.16); }
+.glass-note,.feature-card,.team-carousel,.result-card,.faq details,.faq details[open],.legal-page section { color:#fff8e8; }
+.glass-note small,.feature-card p,.team-slide-copy>p:not(.status):not(.specialty),.faq details p,.legal-page section p,.category-heading p,.procedure-grid p { color:#cfc4ab; }
+.team-slide-copy .specialty,.professional-highlights li,.result-card figcaption { color:#efe3c5; }
+.team-slide-copy .status,.category-heading>span,.result-card figcaption span,.faq summary span,.insurance-logos small { color:#e5b936; }
+.professional-highlights li::before { background:#d8aa29; box-shadow:0 0 0 4px rgba(216,170,41,.14); }
+.professional-highlights,.professional-highlights li { border-color:rgba(217,171,43,.22); }
+.clinic-photo-stack img,.category-photo { border-color:rgba(229,185,54,.34); }
+.text-link,.card-link,.map-preview small { color:#f0c94e; }
+.map-preview {
+  background-color:#171308;
+  background-image:linear-gradient(28deg,transparent 42%,rgba(231,197,103,.42) 43%,rgba(231,197,103,.42) 47%,transparent 48%),linear-gradient(104deg,transparent 35%,rgba(191,147,38,.36) 36%,rgba(191,147,38,.36) 40%,transparent 41%);
+}
+.map-preview:hover { border-color:#f0c94e; }
+.map-road { color:#fff0bd!important; text-shadow:0 1px 4px #000,0 0 8px rgba(230,183,48,.55); }
+.faq { background:linear-gradient(155deg,#f8f4ea,#eee7d8); }
+.faq details[open] { background:linear-gradient(145deg,rgba(55,43,15,.96),rgba(9,9,8,.94)); }
+.result-card figcaption { background:linear-gradient(145deg,rgba(44,36,17,.96),rgba(10,10,9,.94)); }
+.category-heading h3,.procedure-grid h4 { color:#fff8e8; }
+.procedure-grid article { border-color:rgba(226,181,49,.25); background:rgba(18,15,8,.62); }
+.treatments-cta p { color:#efe5cc; }
+footer { background:#050505; }
+@supports not (backdrop-filter:blur(10px)) { .button,.glass-note,.feature-card,.team-carousel,.place-grid>div,.map-preview,.treatment-row,.treatment-category,.treatments-cta,.result-card,.insurance-logos>span,.faq details,.contact-card,.testimonial-empty,.legal-page section { background:#17130a; } }
