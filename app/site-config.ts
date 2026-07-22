@@ -9,6 +9,7 @@ export type Professional = {
   specialty: string;
   cro: string;
   bio: string;
+  highlights?: readonly string[];
   photo?: string;
 };
 
@@ -56,8 +57,14 @@ export const siteConfig = {
       name: "Dr. Marcos Higa",
       specialty: "Cirurgião-dentista",
       cro: "CRO 00.000 · simulação",
-      bio: "+20 anos de experiência. Referência simulada na Baixada Santista em extração, ortodontia, canal e cuidado odontológico completo.",
-      photo: "/dr-marcos-simulation.png",
+      bio: "Atendimento experiente, próximo e voltado ao cuidado integral do sorriso.",
+      highlights: [
+        "+20 anos de experiência",
+        "Referência na Baixada Santista",
+        "Extração, ortodontia e canal",
+        "Cuidado odontológico completo",
+      ],
+      photo: "/dr-marcos-photo-v2.png",
     },
     {
       name: "Dra. Ana Ribeiro",
