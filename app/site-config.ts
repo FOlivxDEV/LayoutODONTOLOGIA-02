@@ -13,7 +13,7 @@ export const siteConfig = {
     technicalLead: "[INFORMAR RESPONSÁVEL TÉCNICO E CRO]",
   },
   whatsapp: {
-    defaultMessage: "Olá! Encontrei a Jr Odontologia pelo site e gostaria de solicitar um orçamento odontológico.",
+    defaultMessage: "Olá! Acessei o site da Jr Odontologia e gostaria de solicitar um orçamento odontológico.",
     treatmentMessage: (treatment: string) => `Olá! Encontrei no site informações sobre ${treatment} e gostaria de solicitar um orçamento.`,
   },
   seo: {
@@ -42,7 +42,7 @@ export const siteConfig = {
     ]},
   ] satisfies TreatmentCategory[],
   professionals: [
-    { name: "Dr. Marcos Higa", specialty: "Cirurgião-dentista", cro: "CRO 00.000 · DADO A CONFIRMAR", bio: "Atendimento experiente, próximo e voltado ao cuidado integral do sorriso.", highlights: ["+20 anos de experiência", "Referência na Baixada Santista", "Extração, ortodontia e canal", "Cuidado odontológico completo"], photo: "/dr-marcos-photo-v2.png" },
+    { name: "Dr. Marcos Higa", specialty: "Cirurgião-dentista", cro: "CRO 00.000 · DADO A CONFIRMAR", bio: "Atendimento experiente, próximo e voltado ao cuidado integral do sorriso.", highlights: ["+20 anos de experiência", "Referência na Baixada Santista", "Extração, ortodontia e canal", "Cuidado odontológico completo"], photo: "/dr-marcos-photo-v2.webp" },
     { name: "Dr. José Renato P. Melo", specialty: "Cirurgião-dentista", cro: "CRO 110061", bio: "Atua na equipe da Jr Odontologia com atendimento integrado e planejamento individualizado." },
     { name: "Dr. José Roberto P. Melo", specialty: "Cirurgião-dentista", cro: "CRO 110060", bio: "Atua na equipe da Jr Odontologia com cuidado próximo e atenção às necessidades de cada paciente." },
   ] satisfies Professional[],
@@ -61,4 +61,9 @@ export function getWhatsAppUrl(message?: string) {
   const number = siteConfig.clinic.whatsapp.replace(/\D/g, "");
   if (!number) return null;
   return `https://wa.me/${number}?text=${encodeURIComponent(message ?? siteConfig.whatsapp.defaultMessage)}`;
+}
+
+export function getTelephoneUrl() {
+  const number = siteConfig.clinic.whatsapp.replace(/\D/g, "");
+  return number ? `tel:+${number}` : null;
 }

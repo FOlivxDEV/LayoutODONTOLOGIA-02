@@ -3,8 +3,7 @@ import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } fr
 import handler from "vinext/server/app-router-entry";
 
 interface Env {
-  ASSETS: Fetcher;
-  DB: D1Database;
+  ASSETS: { fetch(request: Request): Promise<Response> };
   IMAGES: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {
@@ -46,11 +45,14 @@ const worker = {
 
 function secure(response: Response) {
   const secured = new Response(response.body, response);
-  secured.headers.set("Content-Security-Policy", "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; upgrade-insecure-requests");
+  secured.headers.set("Content-Security-Policy", "default-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; media-src 'none'; worker-src 'self'; upgrade-insecure-requests");
+  secured.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
   secured.headers.set("X-Content-Type-Options", "nosniff");
   secured.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   secured.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=(), usb=()");
   secured.headers.set("X-Frame-Options", "DENY");
+  secured.headers.set("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  secured.headers.set("Cross-Origin-Resource-Policy", "same-origin");
   return secured;
 }
 
