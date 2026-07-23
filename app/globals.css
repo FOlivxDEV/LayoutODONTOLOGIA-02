@@ -281,8 +281,28 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
 .hero-insurance>p { margin:0 0 13px; text-align:center; color:#bce7df; font-size:.63rem; font-weight:800; letter-spacing:.18em; text-transform:uppercase; }
 .hero-insurance-viewport { overflow:hidden; }
 .hero-insurance-track { width:max-content; display:flex; animation:insurance-scroll 28s linear infinite; will-change:transform; }
-.hero-insurance-set { display:flex; align-items:center; }
+.hero-insurance-set { width:100vw; flex:0 0 100vw; display:flex; align-items:center; }
 .hero-insurance-set span { min-width:210px; padding:5px 28px; text-align:center; color:#f1fbf8; font-size:.92rem; font-weight:750; letter-spacing:.02em; opacity:.88; }
+.hero-insurance-set span {
+  min-width:0;
+  flex:1 1 33.333%;
+  height:82px;
+  margin:0 10px;
+  padding:10px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  opacity:1;
+}
+.hero-insurance-set img {
+  width:min(100%,220px);
+  height:58px;
+  object-fit:contain;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.18));
+}
 .hero-insurance:hover .hero-insurance-track,.hero-insurance:focus-within .hero-insurance-track { animation-play-state:paused; }
 @keyframes insurance-scroll { to { transform:translateX(-50%); } }
 
@@ -311,10 +331,392 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
   .hero-visual { min-height:320px; }.hero-visual>img { height:320px; border-radius:7px; }
   .glass-note { left:10px; bottom:12px; border-radius:6px; }
   .hero-insurance { padding:16px 0 19px; }
-  .hero-insurance-set span { min-width:150px; padding-inline:18px; font-size:.8rem; }
+  .hero-insurance-set span { min-width:0; height:68px; margin-inline:4px; padding:8px 10px; font-size:.8rem; }
+  .hero-insurance-set img { height:48px; }
   .result-card { width:82vw; }.result-image { height:270px; }
 }
 @media (prefers-reduced-motion:reduce) {
   .hero-insurance-track { width:auto; max-width:100%; overflow-x:auto; animation:none; }
   .hero-insurance-set:nth-child(2) { display:none; }
+}
+
+/* Hero typography inspired by the supplied institutional reference */
+.hero {
+  grid-template-columns:minmax(480px,1.12fr) minmax(380px,.78fr);
+  column-gap:clamp(48px,6vw,104px);
+}
+.hero-content {
+  max-width:690px;
+  font-family:Arial,Helvetica,sans-serif;
+}
+.hero h1 {
+  max-width:680px;
+  margin:0 0 26px;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:clamp(3rem,4.35vw,4.65rem);
+  font-weight:600;
+  line-height:1.06;
+  letter-spacing:-.035em;
+}
+.hero h1 em {
+  color:var(--mint);
+  font-family:inherit;
+  font-style:normal;
+  font-weight:600;
+}
+.hero-copy {
+  max-width:650px;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:1.12rem;
+  font-weight:500;
+  line-height:1.55;
+  letter-spacing:-.012em;
+}
+.hero .button {
+  min-height:54px;
+  padding-inline:26px;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:1rem;
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+.hero-visual {
+  width:min(100%,520px);
+  min-height:390px;
+  justify-self:end;
+}
+.hero-visual>img {
+  height:390px;
+}
+
+@media (max-width:980px) {
+  .hero { grid-template-columns:1fr; }
+  .hero-visual { width:min(100%,620px); min-height:390px; justify-self:start; }
+  .hero-visual>img { height:390px; }
+}
+@media (max-width:620px) {
+  .hero h1 { font-size:clamp(2.45rem,11vw,3.25rem); letter-spacing:-.03em; }
+  .hero-copy { font-size:1rem; line-height:1.58; }
+  .hero .button { min-height:50px; font-size:.94rem; }
+  .hero-visual { min-height:300px; }
+  .hero-visual>img { height:300px; }
+}
+
+/* Wide editorial revision */
+.section {
+  padding-left:max(32px,calc((100vw - 1600px)/2));
+  padding-right:max(32px,calc((100vw - 1600px)/2));
+}
+.section-heading,.results-heading,.results-note {
+  max-width:1600px;
+}
+.eyebrow { display:none!important; }
+.section h2,.results-heading h2,.story-copy h2,.place-main h2,.contact-copy h2 {
+  font-family:Arial,Helvetica,sans-serif;
+  font-weight:600;
+  letter-spacing:-.035em;
+  line-height:1.06;
+}
+
+/* Header belongs to the hero and becomes white progressively while scrolling */
+.site-header {
+  --header-progress:0;
+  color:#fff;
+  border:0;
+  background:rgba(255,255,255,var(--header-progress));
+  box-shadow:none;
+  backdrop-filter:blur(calc(var(--header-progress) * 14px));
+  transition:color .25s ease,box-shadow .25s ease;
+}
+.site-header .brand img { filter:none; }
+.site-header .nav { color:#fff; }
+.site-header .nav>a:not(.button):hover { color:#7ce1d2; }
+.site-header.is-scrolled {
+  color:#102f35;
+  box-shadow:0 8px 28px rgba(4,34,42,.08);
+}
+.site-header.is-scrolled .brand img { filter:invert(1); }
+.site-header.is-scrolled .nav { color:#102f35; }
+.site-header.is-scrolled .nav>a:not(.button):hover { color:#087d7a; }
+.site-header:not(.is-scrolled) .nav-cta {
+  color:#fff;
+  border-color:rgba(255,255,255,.4);
+  background:rgba(4,42,54,.46);
+  backdrop-filter:blur(16px);
+}
+.site-header {
+  min-height:96px;
+  transition:min-height .28s ease,color .25s ease,box-shadow .25s ease;
+}
+.site-header .brand,.site-header .brand img {
+  transition:width .28s ease,height .28s ease,filter .25s ease,transform .28s ease;
+}
+.site-header .brand { width:104px; height:78px; }
+.site-header .brand img { width:104px; height:78px; object-fit:contain; }
+.site-header.is-scrolled { min-height:76px; }
+.site-header.is-scrolled .brand { width:64px; height:54px; }
+.site-header.is-scrolled .brand img { width:64px; height:54px; }
+
+/* Hero and insurance strip are one continuous surface */
+.hero { padding-left:max(32px,calc((100vw - 1600px)/2)); padding-right:max(32px,calc((100vw - 1600px)/2)); }
+.hero-insurance {
+  margin-top:-1px;
+  border-top:0;
+  background:transparent;
+}
+
+/* Three-part clinic section: introduction, photos, contact/map */
+.place-showcase {
+  grid-template-columns:minmax(260px,.74fr) minmax(330px,.9fr) minmax(430px,1.12fr);
+  gap:clamp(26px,3vw,54px);
+  align-items:center;
+}
+.place-main h2 { font-size:clamp(2.65rem,3.8vw,4.7rem); }
+.place-main>p { max-width:430px; }
+.clinic-photo-stack.compact { min-height:440px; }
+.place-contact { min-width:0; }
+.place-contact .place-grid { width:100%; }
+.place-contact .place-actions { display:grid; grid-template-columns:1fr 1fr; margin-top:16px; }
+.place-contact .place-actions .button { width:100%; padding-inline:14px; }
+
+/* Results are image-only with clean separation */
+.results-set { gap:16px; padding-right:16px; }
+.result-card,.result-card:hover {
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:none;
+}
+.result-image { border-radius:6px; }
+
+/* Treatment cards follow the photographic editorial reference */
+.treatment-categories { gap:28px; }
+.treatment-category {
+  overflow:hidden;
+  border:0!important;
+  background:#f8fafb!important;
+  box-shadow:0 14px 34px rgba(1,24,39,.13)!important;
+  backdrop-filter:none;
+}
+.category-photo { height:285px; border:0; }
+.category-heading {
+  min-height:190px;
+  padding:0 28px 28px;
+  color:#06273b;
+  background:#f8fafb;
+}
+.category-heading>span { display:none; }
+.category-heading h3 {
+  margin:0 -28px 24px;
+  padding:22px 58px 22px 28px;
+  color:#fff;
+  background:#042b4c;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:clamp(1.35rem,1.8vw,1.8rem);
+  font-weight:650;
+  letter-spacing:-.02em;
+}
+.category-heading p { color:#425c67; font-size:.94rem; line-height:1.65; }
+.category-heading i { top:18px; color:#fff; }
+.procedure-grid { padding:0 18px 22px; background:#f8fafb; }
+.procedure-grid article { border:1px solid #d7e2e6; background:#fff; }
+.procedure-grid h4 { color:#082c3d; }
+.procedure-grid p { color:#506973; }
+
+@media (max-width:1180px) {
+  .place-showcase { grid-template-columns:1fr 1fr; }
+  .place-main { grid-column:1/-1; }
+  .place-main>p { max-width:680px; }
+}
+@media (max-width:720px) {
+  .section { padding-left:18px; padding-right:18px; }
+  .site-header { background:rgba(4,34,45,.9); }
+  .site-header.is-scrolled { background:#fff; }
+  .site-header:not(.is-scrolled) .menu-button span { background:#fff; }
+  .site-header { min-height:86px; }
+  .site-header .brand,.site-header .brand img { width:82px; height:66px; }
+  .site-header.is-scrolled { min-height:72px; }
+  .site-header.is-scrolled .brand,.site-header.is-scrolled .brand img { width:58px; height:50px; }
+  .place-showcase { grid-template-columns:1fr; }
+  .place-main { grid-column:auto; }
+  .place-contact .place-actions { grid-template-columns:1fr; }
+  .clinic-photo-stack.compact { min-height:410px; }
+  .category-photo { height:220px; }
+}
+
+/* Floating treatment selector and procedure gallery */
+.treatment-selector {
+  width:max-content;
+  max-width:100%;
+  margin:44px auto 42px;
+  padding:7px;
+  display:flex;
+  gap:7px;
+  border:1px solid rgba(113,218,242,.34);
+  border-radius:999px;
+  background:rgba(4,35,52,.72);
+  box-shadow:0 18px 44px rgba(0,18,30,.25);
+  backdrop-filter:blur(18px);
+}
+.treatment-selector button {
+  min-width:250px;
+  min-height:66px;
+  padding:10px 24px;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:center;
+  column-gap:12px;
+  border:0;
+  border-radius:999px;
+  color:#d5e8eb;
+  background:transparent;
+  font:650 .94rem Arial,Helvetica,sans-serif;
+  text-align:left;
+  cursor:pointer;
+  transition:background .2s ease,color .2s ease,box-shadow .2s ease;
+}
+.treatment-selector button span {
+  grid-row:1/3;
+  color:#73dff5;
+  font-size:.68rem;
+  letter-spacing:.12em;
+}
+.treatment-selector button small {
+  color:#91adb4;
+  font-size:.66rem;
+  font-weight:500;
+}
+.treatment-selector button.active {
+  color:#06293b;
+  background:#eef8f7;
+  box-shadow:0 8px 22px rgba(0,0,0,.18);
+}
+.treatment-selector button.active small { color:#527079; }
+.treatment-selector button:focus-visible { outline:3px solid #7ce1d2; outline-offset:3px; }
+.procedure-card-grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:24px;
+}
+.procedure-card {
+  min-width:0;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  color:#0a3040;
+  background:#fff;
+  border-radius:10px;
+  box-shadow:0 14px 34px rgba(0,18,30,.15);
+}
+.procedure-photo {
+  width:100%;
+  aspect-ratio:1/1;
+  background-image:url('/treatments-grid.png');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.procedure-photo-sprite { background-size:500% 200%; }
+
+/* More compact, editorial team presentation */
+.clinic-story {
+  grid-template-columns:minmax(420px,.72fr) minmax(420px,.82fr);
+  gap:clamp(88px,9vw,170px);
+  justify-content:center;
+}
+.team-carousel { width:min(100%,470px); max-width:470px; aspect-ratio:9/14; justify-self:end; }
+.team-slide { height:100%; }
+.team-slide .portrait-photo,.team-slide .portrait-placeholder { height:310px; }
+.team-slide-copy { padding:20px 24px; }
+.team-slide-copy h3 { font-size:1.45rem; }
+.story-copy { max-width:590px; }
+.story-copy h2 { margin-bottom:24px; font-size:clamp(2.35rem,3.25vw,3.7rem); }
+.story-copy>p:not(.eyebrow) { margin-bottom:28px; max-width:560px; font-size:.96rem; line-height:1.68; }
+
+@media (max-width:980px) {
+  .clinic-story {
+    grid-template-columns:minmax(0,1fr);
+    gap:42px;
+    justify-items:center;
+  }
+  .story-copy {
+    order:1;
+    width:min(100%,680px);
+    max-width:680px;
+  }
+  .team-carousel {
+    order:2;
+    width:min(100%,470px);
+    justify-self:center;
+  }
+}
+
+@media (max-width:620px) {
+  .clinic-story {
+    width:100%;
+    padding-inline:18px;
+    overflow:hidden;
+  }
+  .story-copy,
+  .team-carousel { min-width:0; width:100%; max-width:100%; }
+  .story-copy h2 { font-size:clamp(2rem,10vw,2.75rem); overflow-wrap:anywhere; }
+  .team-carousel { aspect-ratio:auto; }
+  .team-slide { height:auto; }
+  .team-slide .portrait-photo,.team-slide .portrait-placeholder { height:320px; }
+  .team-slide-copy { padding:20px 18px 24px; }
+  .professional-highlights li { overflow-wrap:anywhere; }
+}
+.procedure-card h3 {
+  margin:-42px 24px 24px;
+  min-height:86px;
+  padding:18px 16px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  background:#042b4c;
+  border-radius:9px;
+  box-shadow:0 10px 24px rgba(0,20,42,.2);
+  font:650 clamp(1rem,1.2vw,1.25rem)/1.25 Arial,Helvetica,sans-serif;
+  text-align:center;
+}
+.procedure-card>p {
+  margin:0;
+  padding:0 24px 22px;
+  color:#465f68;
+  font-size:.9rem;
+  line-height:1.62;
+  text-align:center;
+}
+.procedure-contact {
+  margin:auto 24px 24px;
+  color:#052f4c;
+  font:700 .88rem Arial,Helvetica,sans-serif;
+  text-align:center;
+  text-decoration:none;
+}
+.procedure-contact:hover { text-decoration:underline; }
+
+/* Clínica e tratamentos formam uma única superfície visual contínua. */
+.place-showcase,
+.treatments {
+  border:0;
+  background:#071d2b;
+  background-image:none;
+  box-shadow:none;
+}
+.place-showcase + .treatments { margin-top:-1px; }
+
+@media (max-width:1180px) {
+  .procedure-card-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:720px) {
+  .treatment-selector { width:100%; border-radius:12px; }
+  .treatment-selector button { min-width:0; width:50%; padding:10px 13px; border-radius:9px; }
+  .procedure-card-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .procedure-card h3 { margin:-28px 10px 14px; min-height:70px; padding:12px 8px; font-size:.82rem; }
+  .procedure-card>p { padding:0 12px 16px; font-size:.76rem; }
+  .procedure-contact { margin:0 12px 18px; font-size:.78rem; }
 }

@@ -26,17 +26,13 @@ As imagens públicas ficam em `public/`. Antes de substituir arquivos, confirme 
 
 ## Segurança e privacidade
 
-Os cabeçalhos são definidos em `worker/index.ts`. O projeto não precisa de variáveis de ambiente nesta versão; veja `.env.example`. Não adicione chaves privadas ao navegador ou ao Git. Consulte `SECURITY.md`, `AUDITORIA-TECNICA.md` e `CHECKLIST-PUBLICACAO.md`.
+Os cabeçalhos são definidos em `worker/index.ts`. O projeto não precisa de variáveis de ambiente nesta versão. Não adicione chaves privadas ao navegador ou ao Git. Consulte `SECURITY.md`, `AUDITORIA-TECNICA.md` e `CHECKLIST-PUBLICACAO.md`.
 
 Não há banner de cookies porque não existem ferramentas não essenciais ativas. Se analytics, marketing, formulários ou banco forem introduzidos, faça uma nova revisão LGPD antes de publicar.
 
-## Supabase
+## Conteúdo local
 
-O conteúdo institucional é armazenado no projeto Supabase `owpvdetxhzuwvtmhacdz`, na tabela `public.site_content`. A tabela contém somente clínica, profissionais, tratamentos, convênios e perguntas frequentes — nunca dados de pacientes, agenda ou prontuário.
-
-Configure `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` conforme `.env.example`. Use apenas a chave publicável: nunca exponha `service_role`, `sb_secret` ou a senha do banco. O site consulta o conteúdo no servidor e usa `app/site-config.ts` como fallback seguro quando o Supabase estiver indisponível.
-
-A tabela possui RLS ativa, política pública somente para leitura e nenhum `INSERT`, `UPDATE` ou `DELETE` concedido a visitantes. A migration correspondente está em `supabase/migrations/`.
+Todo o conteúdo institucional é mantido em `app/site-config.ts`. Esta versão não usa banco de dados, API de conteúdo ou serviço externo de persistência.
 
 ## Publicação
 

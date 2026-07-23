@@ -3,12 +3,58 @@
 
 import { useEffect, useRef, useState } from "react";
 import { getTelephoneUrl, getWhatsAppUrl, siteConfig } from "../site-config";
-import type { RemoteSiteContent } from "../supabase-content";
+import type { TreatmentCategory } from "../site-config";
 
 const nav = [
   ["Início", "#inicio"], ["Clínica", "#clinica"], ["Tratamentos", "#tratamentos"],
   ["Equipe", "#equipe"], ["Convênios", "#convenios"], ["Dúvidas", "#duvidas"], ["Contato", "#contato"],
 ] as const;
+
+const heroInsurances = [
+  { name: "Servdonto", logo: "/insurance-servdonto.png" },
+  { name: "INPAO Dental", logo: "/insurance-inpao.png" },
+  { name: "Porto Saúde", logo: "/insurance-porto-saude.png" },
+] as const;
+
+const procedureVisuals: Record<string, { image: string; position?: string }> = {
+  "Implante dentário": { image: "/procedures/implante-dentario.png", position: "center" },
+  "Coroa dentária": { image: "/procedures/coroa-dentaria.png", position: "center" },
+  "Canal (tratamento endodôntico)": { image: "/procedures/procedures-sprite.png", position: "0% 0%" },
+  "Prótese dentária": { image: "/procedures/procedures-sprite.png", position: "25% 0%" },
+  "Restauração": { image: "/procedures/procedures-sprite.png", position: "50% 0%" },
+  "Extração dentária": { image: "/procedures/procedures-sprite.png", position: "75% 0%" },
+  "Limpeza e raspagem": { image: "/procedures/procedures-sprite.png", position: "100% 0%" },
+  "Periodontia (tratamento de gengiva)": { image: "/procedures/procedures-sprite.png", position: "0% 100%" },
+  "Aparelho estético (ortodontia)": { image: "/procedures/procedures-sprite.png", position: "25% 100%" },
+  "Facetas": { image: "/procedures/faceta-porcelana.png", position: "center" },
+  "Lentes de contato": { image: "/procedures/procedures-sprite.png", position: "50% 100%" },
+  "Clareamento dental": { image: "/procedures/procedures-sprite.png", position: "75% 100%" },
+  "Faceta de resina": { image: "/procedures/procedures-sprite.png", position: "100% 100%" },
+  "Faceta de porcelana": { image: "/procedures/faceta-porcelana.png", position: "center" },
+};
+
+function normalizeTreatmentCategories(categories: readonly TreatmentCategory[]): TreatmentCategory[] {
+  const dental = categories.find((category) => category.name === "Procedimentos odontológicos");
+  const aesthetic = categories.find((category) => category.name === "Estética do sorriso");
+  if (!dental || !aesthetic) return [...categories];
+
+  const orthodontics = [...dental.procedures, ...aesthetic.procedures].find((procedure) => procedure.name === "Aparelho estético (ortodontia)");
+  const dentalProcedures = dental.procedures.filter((procedure) => procedure.name !== "Aparelho estético (ortodontia)");
+  const aestheticProcedures = aesthetic.procedures.filter((procedure) => !["Lentes de contato", "Faceta de resina", "Faceta de porcelana", "Facetas", "Aparelho estético (ortodontia)"].includes(procedure.name));
+
+  return categories.map((category) => {
+    if (category.name === dental.name) return { ...category, procedures: dentalProcedures };
+    if (category.name === aesthetic.name) return {
+      ...category,
+      procedures: [
+        { name: "Facetas", description: "Tratamentos estéticos personalizados com opções em resina, porcelana e lentes de contato, definidos conforme avaliação e planejamento clínico." },
+        ...aestheticProcedures,
+        ...(orthodontics ? [orthodontics] : []),
+      ],
+    };
+    return category;
+  });
+}
 
 function trackConversion(context: string) {
   window.dispatchEvent(new CustomEvent("whatsapp_click", { detail: { context } }));
@@ -23,20 +69,19 @@ function WhatsAppLink({ label = "Agendar pelo WhatsApp", treatment, className = 
   return <a className={className} href={href} target="_blank" rel="noopener noreferrer" onClick={() => trackConversion(treatment ?? "geral")}>{label}<span aria-hidden="true"> ↗</span></a>;
 }
 
-export function SiteShell({ content }: { content: RemoteSiteContent | null }) {
-  const config = content ? {
+export function SiteShell() {
+  const config = {
     ...siteConfig,
-    clinic: { ...siteConfig.clinic, ...content.clinic },
-    insurances: content.insurances,
-    treatmentCategories: content.treatmentCategories,
-    professionals: content.professionals,
-    faqs: content.faqs,
-  } : siteConfig;
+    treatmentCategories: normalizeTreatmentCategories(siteConfig.treatmentCategories),
+  };
   const [menuOpen, setMenuOpen] = useState(false);
   const [clinicSlide, setClinicSlide] = useState(0);
   const [teamIndex, setTeamIndex] = useState(0);
   const [clinicPaused, setClinicPaused] = useState(false);
   const [teamPaused, setTeamPaused] = useState(false);
+  const [treatmentCategory, setTreatmentCategory] = useState(0);
+  const [headerScrolled, setHeaderScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const navRef = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -58,6 +103,20 @@ export function SiteShell({ content }: { content: RemoteSiteContent | null }) {
     return () => { document.removeEventListener("keydown", close); observer.disconnect(); };
   }, [menuOpen]);
   useEffect(() => {
+    const updateHeader = () => {
+      const progress = Math.min(1, window.scrollY / Math.max(240, window.innerHeight * 0.62));
+      setHeaderScrolled(progress > 0.42);
+      headerRef.current?.style.setProperty("--header-progress", String(progress));
+    };
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    window.addEventListener("resize", updateHeader);
+    return () => {
+      window.removeEventListener("scroll", updateHeader);
+      window.removeEventListener("resize", updateHeader);
+    };
+  }, []);
+  useEffect(() => {
     if (menuOpen) navRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
   }, [menuOpen]);
   useEffect(() => {
@@ -67,13 +126,13 @@ export function SiteShell({ content }: { content: RemoteSiteContent | null }) {
   }, [clinicPaused]);
   useEffect(() => {
     if (teamPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setInterval(() => setTeamIndex((current) => (current + 1) % config.professionals.length), 8000);
+    const timer = window.setInterval(() => setTeamIndex((current) => (current + 1) % config.professionals.length), 30000);
     return () => window.clearInterval(timer);
   }, [teamPaused, config.professionals.length]);
 
   return <>
     <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
-    <header className="site-header">
+    <header ref={headerRef} className={`site-header ${headerScrolled ? "is-scrolled" : ""}`}>
       <a href="#inicio" className="brand" aria-label="Jr Odontologia — início">
         <img src="/logo-jr-transparent.png" width="96" height="96" alt="Jr Odontologia" />
       </a>
@@ -90,7 +149,6 @@ export function SiteShell({ content }: { content: RemoteSiteContent | null }) {
       <section className="hero" id="inicio">
         <div className="orb orb-one" aria-hidden="true"></div><div className="orb orb-two" aria-hidden="true"></div>
         <div className="hero-content" data-reveal>
-          <p className="eyebrow"><span></span> JR Odontologia</p>
           <h1>Seu sorriso merece <em>cuidado por inteiro.</em></h1>
           <p className="hero-copy">Clínica odontológica em Cubatão, SP, que reúne profissionais reconhecidos na Baixada Santista. Oferecemos cuidado completo, da prevenção e manutenção aos tratamentos estéticos, sempre com avaliação responsável e atendimento próximo.</p>
           <div className="hero-actions"><WhatsAppLink /><a href="#clinica" className="button secondary">Conheça nossa localização <span aria-hidden="true">↓</span></a></div>
@@ -102,7 +160,7 @@ export function SiteShell({ content }: { content: RemoteSiteContent | null }) {
         </div>
         <div className="hero-insurance" id="convenios" data-reveal aria-label="Convênios odontológicos atendidos">
           <p>Convênios atendidos</p>
-          <div className="hero-insurance-viewport"><div className="hero-insurance-track">{[0, 1].map((loop) => <div className="hero-insurance-set" key={loop} aria-hidden={loop === 1}>{config.insurances.map((name) => <span key={`${loop}-${name}`}>{name}</span>)}</div>)}</div></div>
+          <div className="hero-insurance-viewport"><div className="hero-insurance-track">{[0, 1].map((loop) => <div className="hero-insurance-set" key={loop} aria-hidden={loop === 1}>{heroInsurances.map((insurance) => <span key={`${loop}-${insurance.name}`}><img src={insurance.logo} width="520" height="220" alt={loop === 0 ? insurance.name : ""} /></span>)}</div>)}</div></div>
         </div>
       </section>
 
@@ -111,22 +169,23 @@ export function SiteShell({ content }: { content: RemoteSiteContent | null }) {
         <div className="story-copy" data-reveal><p className="eyebrow dark"><span></span> Três profissionais, um só cuidado</p><h2 id="clinica-story-title">Odontologia completa, feita por uma equipe que trabalha junto.</h2><p>Na Jr Odontologia, três cirurgiões-dentistas reúnem diferentes áreas de atuação para acompanhar prevenção, estética, reabilitação e urgências com uma visão integrada. Cada caso é conversado em equipe quando necessário, sempre com explicações claras e um plano adequado à realidade de cada pessoa.</p><WhatsAppLink label="Conhecer a clínica pelo WhatsApp" /></div>
       </section>
 
-      <section className="section place-showcase" id="clinica" data-reveal>
-        <div className="place-main"><p className="eyebrow"><span></span> Consultório odontológico em Cubatão</p><h2>Fácil de encontrar.<br />Bom de chegar.</h2><p>No Centro de Cubatão, acima do Centro Médico Popular e na esquina com a Praça Princesa Isabel. Consulte a rota e fale com a equipe antes de sair.</p><div className="place-actions"><a href={config.clinic.mapUrl} target="_blank" rel="noopener noreferrer" className="button primary">Visualizar no Google Maps ↗</a><WhatsAppLink label="Falar pelo WhatsApp" className="button secondary" /></div></div>
-        <button className="clinic-photo-stack compact" type="button" onClick={() => setClinicSlide((current) => (current + 1) % 2)} onMouseEnter={() => setClinicPaused(true)} onMouseLeave={() => setClinicPaused(false)} onFocus={() => setClinicPaused(true)} onBlur={() => setClinicPaused(false)} aria-label="Alternar entre foto ilustrativa da fachada e do consultório"><img className={clinicSlide === 0 ? "active" : ""} src="/clinic-facade-illustrative.webp" width="1024" height="1280" alt="Imagem ilustrativa da fachada de uma clínica odontológica" loading="lazy" /><img className={clinicSlide === 1 ? "active" : ""} src="/clinic-office-illustrative.webp" width="1024" height="1280" alt="Imagem ilustrativa de um consultório odontológico" loading="lazy" /><span>Imagem ilustrativa · toque para alternar</span><i aria-hidden="true">{clinicSlide + 1} / 2</i></button>
-        <div className="place-grid"><div><span>Endereço</span><strong>{config.clinic.address}</strong><small>{config.clinic.neighborhood} · {config.clinic.city} · CEP {config.clinic.postalCode}</small></div><div><span>Instagram</span><strong>{config.clinic.instagramHandle}</strong><a href={config.clinic.instagram} target="_blank" rel="noopener noreferrer">Abrir perfil ↗</a></div><div><span>WhatsApp</span><strong>{config.clinic.phoneDisplay}</strong><small>Atendimento e orçamento pelo aplicativo</small></div><a className="map-preview" href={config.clinic.mapUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir a localização da Jr Odontologia no Google Maps"><span className="map-road road-one">Praça Princesa Isabel</span><span className="map-road road-two">Rua Bahia</span><i aria-hidden="true"></i><strong>JR Odontologia<br />Rua Bahia, 21</strong><small>Abrir no Google Maps ↗</small></a></div>
+      <section className="section place-showcase" id="clinica">
+        <div className="place-main" data-reveal><h2>Fácil de encontrar.<br />Bom de chegar.</h2><p>No Centro de Cubatão, acima do Centro Médico Popular e na esquina com a Praça Princesa Isabel. Consulte a rota e fale com a equipe antes de sair.</p></div>
+        <button className="clinic-photo-stack compact" data-reveal type="button" onClick={() => setClinicSlide((current) => (current + 1) % 2)} onMouseEnter={() => setClinicPaused(true)} onMouseLeave={() => setClinicPaused(false)} onFocus={() => setClinicPaused(true)} onBlur={() => setClinicPaused(false)} aria-label="Alternar entre foto ilustrativa da fachada e do consultório"><img className={clinicSlide === 0 ? "active" : ""} src="/clinic-facade-illustrative.webp" width="1024" height="1280" alt="Imagem ilustrativa da fachada de uma clínica odontológica" loading="lazy" /><img className={clinicSlide === 1 ? "active" : ""} src="/clinic-office-illustrative.webp" width="1024" height="1280" alt="Imagem ilustrativa de um consultório odontológico" loading="lazy" /><span>Imagem ilustrativa · toque para alternar</span><i aria-hidden="true">{clinicSlide + 1} / 2</i></button>
+        <div className="place-contact" data-reveal><div className="place-grid"><div><span>Endereço</span><strong>{config.clinic.address}</strong><small>{config.clinic.neighborhood} · {config.clinic.city} · CEP {config.clinic.postalCode}</small></div><div><span>Instagram</span><strong>{config.clinic.instagramHandle}</strong><a href={config.clinic.instagram} target="_blank" rel="noopener noreferrer">Abrir perfil ↗</a></div><div><span>WhatsApp</span><strong>{config.clinic.phoneDisplay}</strong><small>Atendimento e orçamento pelo aplicativo</small></div><a className="map-preview" href={config.clinic.mapUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir a localização da Jr Odontologia no Google Maps"><span className="map-road road-one">Praça Princesa Isabel</span><span className="map-road road-two">Rua Bahia</span><i aria-hidden="true"></i><strong>JR Odontologia<br />Rua Bahia, 21</strong><small>Abrir no Google Maps ↗</small></a></div><div className="place-actions"><a href={config.clinic.mapUrl} target="_blank" rel="noopener noreferrer" className="button primary">Visualizar no Google Maps ↗</a><WhatsAppLink label="Falar pelo WhatsApp" className="button secondary" /></div></div>
       </section>
 
       <section className="section treatments" id="tratamentos">
         <div className="section-heading split" data-reveal><div><p className="eyebrow"><span></span> Tratamentos</p><h2>Duas áreas de cuidado, um atendimento integrado.</h2></div><p>Explore os procedimentos odontológicos e de estética do sorriso oferecidos pela equipe. Cada indicação é definida somente após avaliação profissional.</p></div>
-        <div className="treatment-categories">{config.treatmentCategories.map((category, i) => <details className="treatment-category" key={category.name} data-reveal><summary><div className={`category-photo category-photo-${category.image}`} role="img" aria-label={`Imagem representativa de ${category.name}`}></div><div className="category-heading"><span>{String(i + 1).padStart(2, "0")} · {category.procedures.length} opções</span><h3>{category.name}</h3><p>{category.description}</p><i aria-hidden="true">+</i></div></summary><div className="procedure-grid">{category.procedures.map((procedure) => <article key={procedure.name}><h4>{procedure.name}</h4><p>{procedure.description}</p></article>)}</div></details>)}</div>
+        <div className="treatment-selector" role="tablist" aria-label="Selecione uma área de tratamento" data-reveal>{config.treatmentCategories.map((category, index) => <button key={category.name} type="button" role="tab" aria-selected={treatmentCategory === index} aria-controls="treatment-panel" className={treatmentCategory === index ? "active" : ""} onClick={() => setTreatmentCategory(index)}><span>{String(index + 1).padStart(2, "0")}</span>{category.name}<small>{category.procedures.length} procedimentos</small></button>)}</div>
+        <div className="procedure-card-grid" id="treatment-panel" role="tabpanel" data-reveal>{config.treatmentCategories[treatmentCategory].procedures.map((procedure) => { const visual = procedureVisuals[procedure.name]; return <article className="procedure-card" key={procedure.name}><div className={`procedure-photo${visual?.image.includes("sprite") ? " procedure-photo-sprite" : ""}`} style={visual ? { backgroundImage: `url('${visual.image}')`, backgroundPosition: visual.position } : undefined} role="img" aria-label={`Imagem representativa de ${procedure.name}`}></div><h3>{procedure.name}</h3><p>{procedure.description}</p><WhatsAppLink label="Contato" treatment={procedure.name} className="procedure-contact" /></article>; })}</div>
         <div className="treatments-cta" data-reveal><p>Quer entender qual cuidado combina com a sua necessidade?</p><WhatsAppLink label="Solicitar orçamento pelo WhatsApp" /></div>
       </section>
 
       <section className="results" aria-labelledby="resultados-title" data-reveal>
         <div className="results-heading"><p className="eyebrow dark"><span></span> Resultados</p><h2 id="resultados-title">Sorrisos que contam novas histórias.</h2><p>Conheça alguns resultados odontológicos compartilhados pela clínica. Cada tratamento é individual: as respostas variam e as imagens não representam promessa de resultado.</p></div>
         <div className="results-marquee" tabIndex={0} aria-label="Carrossel automático de resultados odontológicos; passe o mouse ou use o foco para pausar">
-          <div className="results-track">{[0,1].map(loop => <div className="results-set" key={loop} aria-hidden={loop === 1}>{[0,1,2,3].map((index) => <figure className="result-card" key={`${loop}-${index}`}><div className={`result-image result-image-${index}`} role="img" aria-label={loop === 0 ? `Comparativo odontológico demonstrativo ${index + 1}` : undefined}></div><figcaption><span>0{index + 1}</span>Resultado demonstrativo</figcaption></figure>)}</div>)}</div>
+          <div className="results-track">{[0,1].map(loop => <div className="results-set" key={loop} aria-hidden={loop === 1}>{[0,1,2,3].map((index) => <figure className="result-card" key={`${loop}-${index}`}><div className={`result-image result-image-${index}`} role="img" aria-label={loop === 0 ? `Comparativo odontológico demonstrativo ${index + 1}` : undefined}></div></figure>)}</div>)}</div>
         </div>
         <p className="results-note">O carrossel pausa ao receber foco ou ao passar o mouse.</p>
       </section>

@@ -138,7 +138,7 @@ Validação concluída em 22 de julho de 2026:
 - **Corrigido:** menu móvel movimenta e devolve foco; carrosséis pausam em foco/hover e respeitam movimento reduzido.
 - **Corrigido:** páginas seguras de carregamento, erro e 404; scripts agregados de verificação e documentação operacional adicionados.
 - **Melhorado:** principais fotografias ganharam cópias WebP, reduzindo os arquivos usados de destaque em mais de 90% sem alterar dimensões.
-- **Implementado após autorização:** conteúdo institucional migrado para o Supabase `owpvdetxhzuwvtmhacdz`. A tabela `site_content` contém cinco seções públicas, usa RLS, concede apenas leitura e não armazena dados de pacientes, agenda ou prontuário. O site possui fallback local seguro.
+- **Atualizado:** a integração de conteúdo remoto foi removida. Todo o conteúdo institucional é carregado localmente de `app/site-config.ts`, sem banco de dados ou backend.
 
 ## Pendências externas após a auditoria
 
