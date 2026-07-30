@@ -40,9 +40,8 @@ export const siteConfig = {
     ]},
   ] satisfies TreatmentCategory[],
   professionals: [
-    { name: "Dr. Marcos Higa", specialty: "Cirurgião-dentista", cro: "CRO 75.326", bio: "Atendimento experiente, próximo e voltado ao cuidado integral do sorriso.", highlights: ["25 anos de experiência", "Referência na Baixada Santista", "Extração, implante e ortodontia", "Cuidado odontológico completo"], photo: "/dr-marcos-photo-v2.webp" },
-    { name: "Dr. José Renato P. Melo", specialty: "Cirurgião-dentista", cro: "CRO 110061", bio: "Atua na equipe da Jr Odontologia com atendimento integrado e planejamento individualizado." },
-    { name: "Dr. José Roberto P. Melo", specialty: "Cirurgião-dentista", cro: "CRO 110060", bio: "Atua na equipe da Jr Odontologia com cuidado próximo e atenção às necessidades de cada paciente." },
+    { name: "Dr. Marcos Higa", specialty: "Cirurgião-dentista", cro: "CRO 75.326", bio: "Atendimento experiente, próximo e voltado ao cuidado integral do sorriso.", highlights: ["25 anos de experiência", "Referência na Baixada Santista", "Extração, implante e ortodontia", "Cuidado odontológico completo"], photo: "/dr-marcos-higa.png" },
+    { name: "Dr. José Roberto P. Melo", specialty: "Cirurgião-dentista", cro: "CRO 110060", bio: "Atendimento próximo e cuidadoso, com atuação em diferentes regiões.", highlights: ["+10 anos de experiência", "Atende em diversas regiões"], photo: "/dr-jose-roberto-melo.jpeg" },
   ] satisfies Professional[],
   faqs: [
     { question: "Como solicitar um atendimento?", answer: "Use um dos botões de WhatsApp deste site. A equipe continuará o atendimento e confirmará a disponibilidade diretamente pelo aplicativo." },

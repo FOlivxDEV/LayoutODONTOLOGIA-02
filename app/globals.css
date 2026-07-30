@@ -625,10 +625,10 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
   gap:clamp(88px,9vw,170px);
   justify-content:center;
 }
-.team-carousel { width:min(100%,470px); max-width:470px; aspect-ratio:9/14; justify-self:end; }
+.team-carousel { width:min(100%,500px); max-width:500px; aspect-ratio:9/16; justify-self:end; }
 .team-slide { height:100%; }
-.team-slide .portrait-photo,.team-slide .portrait-placeholder { height:310px; }
-.team-slide-copy { padding:20px 24px; }
+.team-slide .portrait-photo,.team-slide .portrait-placeholder { height:430px; }
+.team-slide-copy { padding:32px 24px 24px; }
 .team-slide-copy h3 { font-size:1.45rem; }
 .story-copy { max-width:590px; }
 .story-copy h2 { margin-bottom:24px; font-size:clamp(2.35rem,3.25vw,3.7rem); }
@@ -647,7 +647,7 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
   }
   .team-carousel {
     order:2;
-    width:min(100%,470px);
+    width:min(100%,500px);
     justify-self:center;
   }
 }
@@ -663,8 +663,8 @@ footer { padding:60px max(24px,calc((100vw - 1180px)/2)) 28px; color:#c4d2d2; ba
   .story-copy h2 { font-size:clamp(2rem,10vw,2.75rem); overflow-wrap:anywhere; }
   .team-carousel { aspect-ratio:auto; }
   .team-slide { height:auto; }
-  .team-slide .portrait-photo,.team-slide .portrait-placeholder { height:320px; }
-  .team-slide-copy { padding:20px 18px 24px; }
+  .team-slide .portrait-photo,.team-slide .portrait-placeholder { height:390px; }
+  .team-slide-copy { padding:28px 18px 24px; }
   .professional-highlights li { overflow-wrap:anywhere; }
 }
 .procedure-card h3 {
