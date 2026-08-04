@@ -10,7 +10,11 @@ export const metadata: Metadata = {
   openGraph: { title: siteConfig.seo.title, description: siteConfig.seo.description, type: "website", locale: "pt_BR", siteName: siteConfig.clinic.name, images: [{ url: "/og.webp", width: 1744, height: 910, alt: "Jr Odontologia — Cuidado que acolhe." }] },
   twitter: { card: "summary_large_image", title: siteConfig.seo.title, description: siteConfig.seo.description, images: ["/og.webp"] },
   robots: { index: true, follow: true },
-  icons: { icon: "/favicon.svg" },
+  icons: {
+    icon: [{ url: "/logo-jr-transparent.png", type: "image/png" }],
+    shortcut: "/logo-jr-transparent.png",
+    apple: "/logo-jr-transparent.png",
+  },
 };
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#071b2b" };
